@@ -10,6 +10,8 @@ const MainDiv = styled.div`
   gap: 2rem;
   height: 100vh;
   justify-content: center;
+  padding: 2rem;
+  text-align: center;
 `;
 
 const Header = styled.h1`
