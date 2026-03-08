@@ -1,18 +1,21 @@
 :root {
   --background: #a9c2cd;
   --foreground: #cddce3;
+  --super-foreground: #dce3e7;
   --text-color: #171b1c;
 
   --font-family: "Mona Sans", Arial, Helvetica, sans-serif;
   --code-font-family: "Hubot Sans", Arial, Helvetica, sans-serif;
 
   --corner-radius: 1.5rem;
+  --corner-radius-sm: 0.75rem;
 }
 
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --super-foreground: #dce3e7;
   }
 } */
 
@@ -39,6 +42,11 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+p {
+  all: unset;
 }
 
 @media (prefers-color-scheme: dark) {
