@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/registry";
+import { ThemeProvider } from "@/lib/themeContext";
 import { getSite } from "@/lib/site";
 import { getMetadata } from "@/lib/metadata";
 
@@ -9,15 +10,32 @@ export async function generateMetadata(): Promise<Metadata> {
   return getMetadata(site);
 }
 
+// Applied before React hydrates to prevent a flash of the wrong theme
+const themeInitScript = `
+  (function() {
+    try {
+      var stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light') {
+        document.documentElement.setAttribute('data-theme', stored);
+      }
+    } catch (e) {}
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <ThemeProvider>{children}</ThemeProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

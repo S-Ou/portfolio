@@ -13,13 +13,29 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #1f2629;
     --foreground: #2d3d45;
     --super-foreground: #445c67;
     --text-color: #e6faff;
     --text-color-rgb: 230, 250, 255;
   }
+}
+
+:root[data-theme="dark"] {
+  --background: #1f2629;
+  --foreground: #2d3d45;
+  --super-foreground: #445c67;
+  --text-color: #e6faff;
+  --text-color-rgb: 230, 250, 255;
+}
+
+:root[data-theme="light"] {
+  --background: #a9c2cd;
+  --foreground: #cddce3;
+  --super-foreground: #dce3e7;
+  --text-color: #171b1c;
+  --text-color-rgb: 23, 27, 28;
 }
 
 html,
@@ -53,9 +69,17 @@ p {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
+  html:not([data-theme="light"]) {
     color-scheme: dark;
   }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 @font-face {

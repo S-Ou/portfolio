@@ -1,7 +1,10 @@
+"use client";
+
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
+import { ThemeToggle } from "./themeToggle";
 
 // Adapted from https://www.radix-ui.com/primitives/docs/components/navigation-menu
 
@@ -266,11 +269,12 @@ const ListItemText = styled.p`
 const ViewportPosition = styled.div`
   display: flex;
   justify-content: center;
-  left: 0;
+  left: 50%;
   perspective: 2000px;
   position: absolute;
   top: 100%;
-  width: 100%;
+  transform: translateX(-50%);
+  width: 100vw;
 `;
 
 const Arrow = styled.div`
@@ -285,19 +289,22 @@ const Arrow = styled.div`
 
 function NavMenu({ children }: { children?: React.ReactNode }) {
   return (
-    <NavigationMenuRoot>
-      <NavigationMenuList>
-        {children}
+    <NavWrapper>
+      <NavigationMenuRoot>
+        <NavigationMenuList>
+          {children}
 
-        <NavigationMenuIndicator>
-          <Arrow />
-        </NavigationMenuIndicator>
-      </NavigationMenuList>
+          <NavigationMenuIndicator>
+            <Arrow />
+          </NavigationMenuIndicator>
+        </NavigationMenuList>
 
-      <ViewportPosition>
-        <NavigationMenuViewport />
-      </ViewportPosition>
-    </NavigationMenuRoot>
+        <ViewportPosition>
+          <NavigationMenuViewport />
+        </ViewportPosition>
+      </NavigationMenuRoot>
+      <ThemeToggle />
+    </NavWrapper>
   );
 }
 
@@ -317,6 +324,13 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
     </li>
   ),
 );
+
+const NavWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+`;
 
 export function NavMenuSJOu() {
   return (
@@ -358,7 +372,6 @@ export function NavMenuSJOu() {
         </NavigationMenuLink>
       </NavigationMenu.Item>
     </NavMenu>
-    // switch light/dark mode button here
   );
 }
 
