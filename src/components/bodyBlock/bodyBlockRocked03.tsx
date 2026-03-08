@@ -3,7 +3,7 @@ import { NavMenuRocked03 } from "../navigationMenu";
 import { BodyDiv, BodyTextBlock, BodyTextHeader, BodyText } from "./bodyBlock";
 
 export default async function BodyBlockRocked03() {
-  const stats = await getPlayerStats("rocked03");
+  // const stats = await getPlayerStats("rocked03");
 
   return (
     <BodyDiv>
