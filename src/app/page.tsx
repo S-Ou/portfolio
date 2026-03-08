@@ -7,9 +7,12 @@ import Rocked03Home from "@/components/sites/rocked03/Home";
 export default function Home() {
   const site = getSite();
 
-  if (site === "rocked03") {
-    return <Rocked03Home />;
+  switch (site) {
+    case "rocked03":
+      return <Rocked03Home />;
+    case "sjou":
+      return <SJOuHome />;
+    default:
+      return <></>;
   }
-
-  return <SJOuHome />;
 }
