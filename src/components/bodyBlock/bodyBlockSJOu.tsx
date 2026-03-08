@@ -1,34 +1,11 @@
-import styled from "styled-components";
-import { BlockDiv } from "./commonStyles";
-import NavMenu from "./navigationMenu";
-import SkillsBlock from "./skillsBlock";
+import { NavMenuSJOu } from "../navigationMenu";
+import SkillsBlock from "../skillsBlock";
+import { BodyDiv, BodyTextBlock, BodyTextHeader, BodyText } from "./bodyBlock";
 
-const BodyDiv = styled(BlockDiv)`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const BodyTextBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 5rem 0rem;
-`;
-
-const BodyTextHeader = styled.h1`
-  font-size: 2rem;
-`;
-
-const BodyText = styled.p`
-  font-size: 1.25rem;
-  line-height: 1.5;
-`;
-
-export default function BodyBlock() {
+export default function BodyBlockSJOu() {
   return (
     <BodyDiv>
-      <NavMenu />
+      <NavMenuSJOu />
       <BodyTextBlock>
         <BodyTextHeader>Hi, I'm Samuel.</BodyTextHeader>
         <BodyText>

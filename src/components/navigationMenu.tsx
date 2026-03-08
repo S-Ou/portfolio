@@ -283,46 +283,11 @@ const Arrow = styled.div`
   width: 10px;
 `;
 
-export default function NavMenu() {
+function NavMenu({ children }: { children?: React.ReactNode }) {
   return (
     <NavigationMenuRoot>
       <NavigationMenuList>
-        <NavigationMenu.Item>
-          <NavigationMenuLink href="/">Home</NavigationMenuLink>
-        </NavigationMenu.Item>
-
-        <NavigationMenu.Item>
-          <NavigationMenuTrigger>
-            Projects <ChevronDown size={18} />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <List>
-              <ListItem title="Favourites" href="/projects">
-                My favourite projects I've worked on
-              </ListItem>
-              <ListItem title="Hobby Projects" href="/projects">
-                Projects I've worked on in my own time for myself and for others
-              </ListItem>
-              <ListItem title="Work & Study" href="/projects">
-                Projects I've worked on while working, studying Software
-                Engineering, etc.
-              </ListItem>
-              <ListItem title="Discord" href="/projects">
-                Projects that I've made for Discord, including bots, graphics,
-                and websites
-              </ListItem>
-              <ListItem title="Music" href="/projects">
-                Music that I've played with various groups
-              </ListItem>
-            </List>
-          </NavigationMenuContent>
-        </NavigationMenu.Item>
-
-        <NavigationMenu.Item>
-          <NavigationMenuLink className="NavigationMenuLink" href="/cv">
-            CV
-          </NavigationMenuLink>
-        </NavigationMenu.Item>
+        {children}
 
         <NavigationMenuIndicator>
           <Arrow />
@@ -352,3 +317,76 @@ const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
     </li>
   ),
 );
+
+export function NavMenuSJOu() {
+  return (
+    <NavMenu>
+      <NavigationMenu.Item>
+        <NavigationMenuLink href="/">Home</NavigationMenuLink>
+      </NavigationMenu.Item>
+
+      <NavigationMenu.Item>
+        <NavigationMenuTrigger>
+          Projects <ChevronDown size={18} />
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <List>
+            <ListItem title="Favourites" href="/projects">
+              My favourite projects I've worked on
+            </ListItem>
+            <ListItem title="Hobby Projects" href="/projects">
+              Projects I've worked on in my own time for myself and for others
+            </ListItem>
+            <ListItem title="Work & Study" href="/projects">
+              Projects I've worked on while working, studying Software
+              Engineering, etc.
+            </ListItem>
+            <ListItem title="Discord" href="/projects">
+              Projects that I've made for Discord, including bots, graphics, and
+              websites
+            </ListItem>
+            <ListItem title="Music" href="/projects">
+              Music that I've played with various groups
+            </ListItem>
+          </List>
+        </NavigationMenuContent>
+      </NavigationMenu.Item>
+
+      <NavigationMenu.Item>
+        <NavigationMenuLink className="NavigationMenuLink" href="/cv">
+          CV
+        </NavigationMenuLink>
+      </NavigationMenu.Item>
+    </NavMenu>
+  );
+}
+
+export function NavMenuRocked03() {
+  return (
+    <NavMenu>
+      <NavigationMenu.Item>
+        <NavigationMenuLink href="/">Home</NavigationMenuLink>
+      </NavigationMenu.Item>
+
+      <NavigationMenu.Item>
+        <NavigationMenuTrigger>
+          Projects <ChevronDown size={18} />
+        </NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <List>
+            <ListItem title="Favourites" href="/projects">
+              My favourite projects I've worked on
+            </ListItem>
+            <ListItem title="Hobby Projects" href="/projects">
+              Projects I've worked on in my own time for myself and for others
+            </ListItem>
+            <ListItem title="Discord" href="/projects">
+              Projects that I've made for Discord, including bots, graphics, and
+              websites
+            </ListItem>
+          </List>
+        </NavigationMenuContent>
+      </NavigationMenu.Item>
+    </NavMenu>
+  );
+}

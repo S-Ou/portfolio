@@ -1,6 +1,4 @@
-import styled from "styled-components";
-import { BlockDiv } from "./commonStyles";
-import Line from "./line";
+import Line from "../line";
 import {
   Briefcase,
   Clock,
@@ -11,65 +9,16 @@ import {
 } from "lucide-react";
 import { GitHubIcon, HalaStarIcon, LinkedInIcon } from "@/utils/icons";
 import { useEffect, useState } from "react";
-
-const InfoBlockDiv = styled(BlockDiv)`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-`;
-
-const ProfileImage = styled.img`
-  width: 100%;
-  border-radius: 9999px;
-`;
-
-const NameCard = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 800;
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.25rem;
-  font-weight: 500;
-`;
-
-const StyledInfoTable = styled.table`
-  border-collapse: separate;
-  border-spacing: 0.5rem 0.5rem;
-  margin: -1rem -1rem;
-  width: 100%;
-
-  td {
-    vertical-align: middle;
-  }
-
-  td:first-child {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    height: 2rem;
-  }
-`;
-
-const StyledLinkButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-`;
-
-const StyledLinkButton = styled.a`
-  aspect-ratio: 1 / 1;
-`;
+import {
+  StyledInfoTable,
+  StyledLinkButtons,
+  InfoBlockDiv,
+  ProfileImage,
+  NameCard,
+  Title,
+  Subtitle,
+  LinkButton,
+} from "./infoBlock";
 
 function InfoTable() {
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -90,7 +39,7 @@ function InfoTable() {
     };
 
     updateTime();
-    const interval = setInterval(updateTime, 60000); // Update every minute
+    const interval = setInterval(updateTime, 10000); // Update every 10s
 
     return () => clearInterval(interval);
   }, []);
@@ -152,24 +101,10 @@ function LinkButtons() {
   );
 }
 
-function LinkButton({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <StyledLinkButton href={href} target="_blank" rel="noopener noreferrer">
-      {children}
-    </StyledLinkButton>
-  );
-}
-
-export default function InfoBlock() {
+export default function InfoBlockSJOu() {
   return (
     <InfoBlockDiv>
-      <ProfileImage src="/profile.jpg" alt="Your Name" />
+      <ProfileImage src="/profile-sjou.jpg" alt="Your Name" />
       <NameCard>
         <Title>Samuel Ou</Title>
         <Subtitle>Software Engineer</Subtitle>

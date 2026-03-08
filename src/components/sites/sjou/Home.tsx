@@ -1,7 +1,7 @@
 "use client";
 
-import BodyBlock from "@/components/bodyBlock";
-import InfoBlock from "@/components/infoBlock";
+import BodyBlockSJOu from "@/components/bodyBlock/bodyBlockSJOu";
+import InfoBlockSJOu from "@/components/infoBlock/infoBlockSJOu";
 import styled from "styled-components";
 
 const MainDiv = styled.div`
@@ -17,8 +17,8 @@ const MainDiv = styled.div`
 export default function SJOuHome() {
   return (
     <MainDiv>
-      <InfoBlock />
-      <BodyBlock />
+      <InfoBlockSJOu />
+      <BodyBlockSJOu />
     </MainDiv>
   );
 }

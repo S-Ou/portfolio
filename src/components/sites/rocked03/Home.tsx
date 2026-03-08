@@ -1,5 +1,7 @@
 "use client";
 
+import BodyBlockRocked03 from "@/components/bodyBlock/bodyBlockRocked03";
+import InfoBlockRocked03 from "@/components/infoBlock/infoBlockRocked03";
 import styled from "styled-components";
 
 const MainDiv = styled.div`
@@ -15,8 +17,8 @@ const MainDiv = styled.div`
 export default function Rocked03Home() {
   return (
     <MainDiv>
-      <h1>Rocked03 - Coming Soon</h1>
-      <p>This is a placeholder for the Rocked03 site.</p>
+      <InfoBlockRocked03 />
+      <BodyBlockRocked03 />
     </MainDiv>
   );
 }
