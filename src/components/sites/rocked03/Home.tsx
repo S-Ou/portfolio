@@ -1,6 +1,7 @@
 "use client";
 
 import BodyBlockRocked03 from "@/components/bodyBlock/bodyBlockRocked03";
+import Copyright from "@/components/copyright";
 import InfoBlockRocked03 from "@/components/infoBlock/infoBlockRocked03";
 import styled from "styled-components";
 
@@ -14,11 +15,21 @@ const MainDiv = styled.div`
   padding: 8rem 1rem;
 `;
 
+const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-height: 0;
+`;
+
 export default function Rocked03Home() {
   return (
     <MainDiv>
       <InfoBlockRocked03 />
-      <BodyBlockRocked03 />
+      <RightColumn>
+        <BodyBlockRocked03 />
+        <Copyright name="Rocked03" />
+      </RightColumn>
     </MainDiv>
   );
 }

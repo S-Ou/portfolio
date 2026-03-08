@@ -1,6 +1,7 @@
 "use client";
 
 import BodyBlockSJOu from "@/components/bodyBlock/bodyBlockSJOu";
+import Copyright from "@/components/copyright";
 import InfoBlockSJOu from "@/components/infoBlock/infoBlockSJOu";
 import styled from "styled-components";
 
@@ -14,11 +15,21 @@ const MainDiv = styled.div`
   padding: 8rem 1rem;
 `;
 
+const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-height: 0;
+`;
+
 export default function SJOuHome() {
   return (
     <MainDiv>
       <InfoBlockSJOu />
-      <BodyBlockSJOu />
+      <RightColumn>
+        <BodyBlockSJOu />
+        <Copyright name="Samuel Ou" />
+      </RightColumn>
     </MainDiv>
   );
 }

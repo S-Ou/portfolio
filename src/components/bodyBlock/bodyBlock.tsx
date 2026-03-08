@@ -4,6 +4,7 @@ import { BlockDiv } from "../commonStyles";
 export const BodyDiv = styled(BlockDiv)`
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 1rem;
 `;
 
