@@ -1,26 +1,15 @@
 "use client";
 
-import BodyBlock from "@/components/bodyBlock";
-import { BlockDiv } from "@/components/commonStyles";
-import InfoBlock from "@/components/infoBlock";
-import styled from "styled-components";
-
-const MainDiv = styled.div`
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 300px 1fr;
-  height: 100vh;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 8rem 1rem;
-`;
-
+import { getSite } from "@/lib/site";
+import SJOuHome from "@/components/sites/sjou/Home";
+import Rocked03Home from "@/components/sites/rocked03/Home";
 
 export default function Home() {
-  return (
-    <MainDiv>
-      <InfoBlock />
-      <BodyBlock/>
-    </MainDiv>
-  );
+  const site = getSite();
+
+  if (site === "rocked03") {
+    return <Rocked03Home />;
+  }
+
+  return <SJOuHome />;
 }
