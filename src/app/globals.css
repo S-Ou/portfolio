@@ -3,6 +3,7 @@
   --foreground: #cddce3;
   --super-foreground: #dce3e7;
   --text-color: #171b1c;
+  --text-color-rgb: 23, 27, 28;
 
   --font-family: "Mona Sans", Arial, Helvetica, sans-serif;
   --code-font-family: "Hubot Sans", Arial, Helvetica, sans-serif;
@@ -11,13 +12,15 @@
   --corner-radius-sm: 0.75rem;
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --super-foreground: #dce3e7;
+    --background: #1f2629;
+    --foreground: #2d3d45;
+    --super-foreground: #445c67;
+    --text-color: #e6faff;
+    --text-color-rgb: 230, 250, 255;
   }
-} */
+}
 
 html,
 body {

@@ -90,7 +90,7 @@ const StyledItem = styled(ToggleGroupPrimitive.Item)`
   all: unset;
   border-radius: 0.4rem;
   box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(var(--text-color-rgb), 0.5);
   cursor: pointer;
   display: inline-flex;
   font-size: 13px;
@@ -105,16 +105,16 @@ const StyledItem = styled(ToggleGroupPrimitive.Item)`
   z-index: 1;
 
   &:focus-visible {
-    outline: 2px solid black;
+    outline: 2px solid var(--text-color);
     outline-offset: 2px;
   }
 
   &[data-state="on"] {
-    color: rgba(0, 0, 0, 0.9);
+    color: rgba(var(--text-color-rgb), 0.9);
   }
 
   &:hover:not([data-state="on"]) {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(var(--text-color-rgb), 0.7);
   }
 `;
 

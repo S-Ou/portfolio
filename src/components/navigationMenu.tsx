@@ -358,6 +358,7 @@ export function NavMenuSJOu() {
         </NavigationMenuLink>
       </NavigationMenu.Item>
     </NavMenu>
+    // switch light/dark mode button here
   );
 }
 
