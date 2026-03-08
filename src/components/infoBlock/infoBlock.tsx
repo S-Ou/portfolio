@@ -10,7 +10,8 @@ export const InfoBlockDiv = styled(BlockDiv)`
 
 export const ProfileImage = styled.img`
   width: 100%;
-  border-radius: 9999px;
+  border-radius: 100%;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 `;
 
 export const NameCard = styled.div`
