@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BlockDiv } from "./commonStyles";
 import NavMenu from "./navigationMenu";
+import SkillsBlock from "./skillsBlock";
 
 const BodyDiv = styled(BlockDiv)`
   display: flex;
@@ -12,7 +13,7 @@ const BodyTextBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 8rem 0rem;
+  padding: 5rem 0rem;
 `;
 
 const BodyTextHeader = styled.h1`
@@ -40,6 +41,7 @@ export default function BodyBlock() {
           luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
         </BodyText>
       </BodyTextBlock>
+      <SkillsBlock />
     </BodyDiv>
   );
 }

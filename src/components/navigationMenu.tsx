@@ -29,6 +29,7 @@ const baseItemStyles = css`
   line-height: 1;
   outline: none;
   padding: 0.25rem 1rem;
+  transition: background-color 150ms ease;
   user-select: none;
 
   &:hover {
