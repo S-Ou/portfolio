@@ -11,6 +11,7 @@ import {
   University,
 } from "lucide-react";
 import { GitHubIcon, HalaStarIcon, LinkedInIcon } from "@/utils/icons";
+import { useEffect, useState } from "react";
 
 const InfoBlockDiv = styled(BlockDiv)`
   display: flex;
@@ -44,14 +45,19 @@ const Subtitle = styled.p`
 
 const StyledInfoTable = styled.table`
   border-collapse: separate;
-  border-spacing: 0.5rem 1rem;
-  margin: -1rem -0.5rem;
+  border-spacing: 0.5rem 0.5rem;
+  margin: -1rem -1rem;
   width: 100%;
+
+  td {
+    vertical-align: middle;
+  }
 
   td:first-child {
     align-items: center;
     display: flex;
     justify-content: center;
+    height: 2rem;
   }
 `;
 
@@ -67,6 +73,29 @@ const StyledLinkButton = styled.a`
 `;
 
 function InfoTable() {
+  const [currentTime, setCurrentTime] = useState<string>("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      setCurrentTime(
+        new Date().toLocaleTimeString([], {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+          timeZone: "Pacific/Auckland",
+          timeZoneName: "short",
+        }),
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <StyledInfoTable>
       <tbody>
@@ -98,17 +127,7 @@ function InfoTable() {
           <td>
             <Clock size={24} />
           </td>
-          <td>
-            {new Date().toLocaleTimeString([], {
-              month: "short",
-              day: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: true,
-              timeZone: "Pacific/Auckland",
-              timeZoneName: "short",
-            })}
-          </td>
+          <td>{currentTime || "Loading..."}</td>
         </tr>
       </tbody>
     </StyledInfoTable>
