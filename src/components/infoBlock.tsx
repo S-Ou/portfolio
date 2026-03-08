@@ -5,7 +5,6 @@ import {
   Briefcase,
   Clock,
   GraduationCap,
-  Link,
   Mail,
   MapPin,
   University,

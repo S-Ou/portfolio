@@ -1,21 +1,28 @@
+import { headers } from "next/headers";
+
 export type SiteType = "sjou" | "rocked03";
 
 /**
- * Gets the current site based on environment variable or hostname
+ * Gets the current site based on middleware headers or environment variable
  */
-export function getSite(): SiteType {
-  // In development, use environment variable
-  if (process.env.NEXT_PUBLIC_SITE === "rocked03") {
-    return "rocked03";
-  }
-
-  // In production, check hostname (server-side)
+export async function getSite(): Promise<SiteType> {
+  // Server-side: check headers set by middleware
   if (typeof window === "undefined") {
-    // Will be set by middleware
-    return (process.env.NEXT_PUBLIC_SITE as SiteType) || "sjou";
+    try {
+      const headersList = await headers();
+      const site = headersList.get("x-site") as SiteType;
+      if (site) return site;
+    } catch (e) {
+      // headers() not available in this context
+    }
+
+    // Fallback to environment variable
+    if (process.env.NEXT_PUBLIC_SITE === "rocked03") {
+      return "rocked03";
+    }
   }
 
-  // Client-side fallback
+  // Client-side: check hostname
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
     if (hostname.includes("rocked03.dev")) {

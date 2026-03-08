@@ -1,18 +1,18 @@
-"use client";
-
 import { getSite } from "@/lib/site";
+import SiteWrapper from "@/components/SiteWrapper";
 import SJOuHome from "@/components/sites/sjou/Home";
 import Rocked03Home from "@/components/sites/rocked03/Home";
 
-export default function Home() {
-  const site = getSite();
+export default async function Home() {
+  const site = await getSite();
 
-  switch (site) {
-    case "rocked03":
-      return <Rocked03Home />;
-    case "sjou":
-      return <SJOuHome />;
-    default:
-      return <></>;
-  }
+  return (
+    <SiteWrapper
+      site={site}
+      components={{
+        sjou: SJOuHome,
+        rocked03: Rocked03Home,
+      }}
+    />
+  );
 }
