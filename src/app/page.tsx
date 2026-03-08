@@ -1,45 +1,30 @@
 "use client";
 
-import { Github } from "lucide-react";
+import { BlockDiv } from "@/components/commonStyles";
+import InfoBlock from "@/components/infoBlock";
 import styled from "styled-components";
 
 const MainDiv = styled.div`
-  align-items: center;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 8rem 1rem;
+`;
+
+const BodyDiv = styled(BlockDiv)`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  height: 100vh;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-`;
-
-const Header = styled.h1`
-  font-size: 3rem;
-  font-weight: 800;
-`;
-
-const Link = styled.a`
-  color: inherit;
-  text-decoration: none;
-  font-size: 0.875rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  gap: 1rem;
 `;
 
 export default function Home() {
   return (
     <MainDiv>
-      <Header>Under construction...</Header>
-      <Link
-        href="https://github.com/S-Ou"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Github size={24} />
-      </Link>
+      <InfoBlock />
+      <BodyDiv></BodyDiv>
     </MainDiv>
   );
 }
