@@ -1,7 +1,10 @@
+import { getPlayerStats } from "@/utils/rivalsTracker";
 import { NavMenuRocked03 } from "../navigationMenu";
 import { BodyDiv, BodyTextBlock, BodyTextHeader, BodyText } from "./bodyBlock";
 
-export default function BodyBlockRocked03() {
+export default async function BodyBlockRocked03() {
+  const stats = await getPlayerStats("rocked03");
+
   return (
     <BodyDiv>
       <NavMenuRocked03 />
@@ -17,6 +20,10 @@ export default function BodyBlockRocked03() {
           luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
         </BodyText>
       </BodyTextBlock>
+      {/* <div>
+        <h2>Rivals Tracker Stats:</h2>
+        <pre>{JSON.stringify(stats, null, 2)}</pre>
+      </div> */}
     </BodyDiv>
   );
 }
