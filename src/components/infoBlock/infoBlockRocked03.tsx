@@ -1,6 +1,11 @@
 import Line from "../line";
 import { Clock, Code, Mail, MapPin } from "lucide-react";
-import { GitHubIcon, MarvelDiscordIcon } from "@/utils/icons";
+import {
+  GitHubIcon,
+  MarvelDiscordIcon,
+  RedditIcon,
+  SteamIcon,
+} from "@/utils/icons";
 import { useEffect, useState } from "react";
 import {
   StyledInfoTable,
@@ -73,6 +78,12 @@ function LinkButtons() {
     <StyledLinkButtons>
       <LinkButton href="https://github.com/Rocked03">
         <GitHubIcon size={24} />
+      </LinkButton>
+      <LinkButton href="https://steamcommunity.com/id/rocked03/">
+        <SteamIcon size={24} />
+      </LinkButton>
+      <LinkButton href="https://www.reddit.com/user/Rocked03/">
+        <RedditIcon size={24} />
       </LinkButton>
       <LinkButton href="mailto:me@rocked03.dev">
         <Mail size={24} />

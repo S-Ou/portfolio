@@ -59,6 +59,7 @@ export const StyledLinkButtons = styled.div`
 
 export const StyledLinkButton = styled.a`
   aspect-ratio: 1 / 1;
+  display: flex;
 `;
 
 export function LinkButton({
