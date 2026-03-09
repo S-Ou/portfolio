@@ -130,6 +130,40 @@ export const RedditIcon: React.FC<IconProps> = ({
   );
 };
 
+export const LetterboxdIcon: React.FC<IconProps> = ({
+  className = "",
+  size = 24,
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="61 61 378 378"
+      className={className}
+    >
+      <defs>
+        <mask id="lbxd-mask">
+          <rect width="500" height="500" fill="white" />
+          <path
+            d="M190.539326,287.063108 C183.810493,276.314929 179.921348,263.611134 179.921348,250 C179.921348,236.388866 183.810493,223.685071 190.539326,212.936892 C197.268159,223.685071 201.157303,236.388866 201.157303,250 C201.157303,263.611134 197.268159,276.314929 190.539326,287.063108 Z"
+            fill="black"
+          />
+          <path
+            d="M309.460674,212.936892 C316.189507,223.685071 320.078652,236.388866 320.078652,250 C320.078652,263.611134 316.189507,276.314929 309.460674,287.063108 C302.731841,276.314929 298.842697,263.611134 298.842697,250 C298.842697,236.388866 302.731841,223.685071 309.460674,212.936892 Z"
+            fill="black"
+          />
+        </mask>
+      </defs>
+      <g mask="url(#lbxd-mask)" fill="currentColor">
+        <ellipse cx="131.0786517" cy="250" rx="70.0786517" ry="70" />
+        <ellipse cx="250" cy="250" rx="70.0786517" ry="70" />
+        <ellipse cx="368.9213483" cy="250" rx="70.0786517" ry="70" />
+      </g>
+    </svg>
+  );
+};
+
 export const MarvelDiscordIcon: React.FC<IconProps> = ({
   className = "",
   size = 24,

@@ -1,7 +1,8 @@
 import Line from "../line";
-import { Clock, Code, Mail, MapPin } from "lucide-react";
+import { Clock, Code, Link, Mail, MapPin } from "lucide-react";
 import {
   GitHubIcon,
+  LetterboxdIcon,
   MarvelDiscordIcon,
   RedditIcon,
   SteamIcon,
@@ -82,8 +83,8 @@ function LinkButtons() {
       <LinkButton href="https://steamcommunity.com/id/rocked03/">
         <SteamIcon size={24} />
       </LinkButton>
-      <LinkButton href="https://www.reddit.com/user/Rocked03/">
-        <RedditIcon size={24} />
+      <LinkButton href="https://letterboxd.com/rocked03/">
+        <LetterboxdIcon size={24} />
       </LinkButton>
       <LinkButton href="mailto:me@rocked03.dev">
         <Mail size={24} />
