@@ -1,4 +1,4 @@
-import SiteWrapper from "@/components/SiteWrapperRename";
+import SiteWrapper from "@/components/siteWrapper";
 import Rocked03NotFound from "@/components/sites/rocked03/NotFound";
 import SJOuNotFound from "@/components/sites/sjou/NotFound";
 import { getSite } from "@/lib/site";

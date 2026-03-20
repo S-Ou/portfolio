@@ -1,5 +1,5 @@
 import ProjectsSJOu from "@/components/sites/sjou/Projects";
-import SiteWrapper from "@/components/SiteWrapperRename";
+import SiteWrapper from "@/components/siteWrapper";
 import { getSite } from "@/lib/site";
 
 export default async function Projects() {

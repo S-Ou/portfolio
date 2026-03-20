@@ -1,5 +1,5 @@
 import { getSite } from "@/lib/site";
-import SiteWrapper from "@/components/SiteWrapperRename";
+import SiteWrapper from "@/components/siteWrapper";
 import SJOuHome from "@/components/sites/sjou/Home";
 import Rocked03Home from "@/components/sites/rocked03/Home";
 
