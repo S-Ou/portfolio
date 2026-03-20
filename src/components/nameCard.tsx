@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const fadeIn = keyframes`
   from {
@@ -132,8 +132,9 @@ function NameCard({ profileImageUrl, name, subtitle }: NameCardProps) {
         <Title>{name}</Title>
         {(displayedSubtitle || isSubtitleArray) && (
           <Subtitle
-            key={displayedSubtitle}
             $isDynamic={isSubtitleArray}
+            key={displayedSubtitle}
+            onClick={handleSubtitleHover}
             onMouseEnter={handleSubtitleHover}
           >
             {displayedSubtitle || (isSubtitleArray ? "\u00A0" : "")}
