@@ -3,8 +3,8 @@
 import Copyright from "@/components/copyright";
 import styled from "styled-components";
 import type { ComponentType } from "react";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import type { InfoBlockProps } from "@/components/infoBlock/infoBlock";
+import { BlockDiv } from "@/components/commonStyles";
 
 type HomeLayoutProps = {
   InfoBlock: ComponentType<InfoBlockProps>;
@@ -28,11 +28,43 @@ const MainDiv = styled.div`
   }
 `;
 
+const MobileNameCardBlock = styled(BlockDiv)`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
 const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   min-height: 0;
+
+  @media (max-width: 768px) {
+    display: contents;
+  }
+`;
+
+const BodySection = styled.div`
+  height: 100%;
+
+  @media (max-width: 768px) {
+    order: 1;
+  }
+`;
+
+const InfoSection = styled.div`
+  @media (max-width: 768px) {
+    order: 2;
+  }
+`;
+
+const CopyrightSection = styled.div`
+  @media (max-width: 768px) {
+    order: 3;
+  }
 `;
 
 export default function HomeLayout({
@@ -43,10 +75,19 @@ export default function HomeLayout({
 }: HomeLayoutProps) {
   return (
     <MainDiv>
-      <InfoBlock NameCardComponent={NameCardComponent} />
+      <MobileNameCardBlock>
+        <NameCardComponent />
+      </MobileNameCardBlock>
+      <InfoSection>
+        <InfoBlock NameCardComponent={NameCardComponent} />
+      </InfoSection>
       <RightColumn>
-        <BodyBlock />
-        <Copyright name={copyrightName} />
+        <BodySection>
+          <BodyBlock />
+        </BodySection>
+        <CopyrightSection>
+          <Copyright name={copyrightName} />
+        </CopyrightSection>
       </RightColumn>
     </MainDiv>
   );

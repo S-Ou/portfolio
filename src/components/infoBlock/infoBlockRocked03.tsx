@@ -11,6 +11,7 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
+  NameCardSection,
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
@@ -98,8 +99,10 @@ export default function InfoBlockRocked03({
 }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardComponent />
-      <Line />
+      <NameCardSection>
+        <NameCardComponent />
+        <Line />
+      </NameCardSection>
       <InfoTable />
       <Line />
       <LinkButtons />

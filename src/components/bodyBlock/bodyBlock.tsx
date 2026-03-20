@@ -6,6 +6,7 @@ export const BodyDiv = styled(BlockDiv)`
   flex-direction: column;
   flex: 1;
   gap: 1rem;
+  height: 100%;
 `;
 
 export const BodyTextBlock = styled.div`
@@ -13,6 +14,10 @@ export const BodyTextBlock = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 5rem 0rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 0rem;
+  }
 `;
 
 export const BodyTextHeader = styled.h1`

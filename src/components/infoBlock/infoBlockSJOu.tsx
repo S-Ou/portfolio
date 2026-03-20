@@ -13,6 +13,7 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
+  NameCardSection,
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
@@ -101,8 +102,10 @@ function LinkButtons() {
 export default function InfoBlockSJOu({ NameCardComponent }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardComponent />
-      <Line />
+      <NameCardSection>
+        <NameCardComponent />
+        <Line />
+      </NameCardSection>
       <InfoTable />
       <Line />
       <LinkButtons />

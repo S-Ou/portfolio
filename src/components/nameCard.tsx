@@ -4,6 +4,10 @@ const ProfileImage = styled.img`
   width: 100%;
   border-radius: 100%;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    width: 5rem;
+  }
 `;
 
 const StyledNameCard = styled.div`
@@ -12,6 +16,12 @@ const StyledNameCard = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -19,6 +29,11 @@ const TextWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
 `;
 
 const Title = styled.h1`

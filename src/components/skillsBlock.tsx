@@ -9,6 +9,10 @@ const StyledSkillsBlock = styled.div`
   gap: 1rem;
   margin: 0 auto;
   width: fit-content;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const SkillPillContainer = styled.div`
