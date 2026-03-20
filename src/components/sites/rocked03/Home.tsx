@@ -1,35 +1,15 @@
 "use client";
 
 import BodyBlockRocked03 from "@/components/bodyBlock/bodyBlockRocked03";
-import Copyright from "@/components/copyright";
 import InfoBlockRocked03 from "@/components/infoBlock/infoBlockRocked03";
-import styled from "styled-components";
-
-const MainDiv = styled.div`
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: 300px 1fr;
-  height: 100vh;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 8rem 1rem;
-`;
-
-const RightColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  min-height: 0;
-`;
+import HomeLayout from "@/components/sites/homeLayout";
 
 export default function Rocked03Home() {
   return (
-    <MainDiv>
-      <InfoBlockRocked03 />
-      <RightColumn>
-        <BodyBlockRocked03 />
-        <Copyright name="Rocked03" />
-      </RightColumn>
-    </MainDiv>
+    <HomeLayout
+      InfoBlock={InfoBlockRocked03}
+      BodyBlock={BodyBlockRocked03}
+      copyrightName="Rocked03"
+    />
   );
 }
