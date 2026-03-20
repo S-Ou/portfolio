@@ -1,7 +1,8 @@
 "use client";
 
 import { SiteType } from "@/lib/site";
-import { ComponentType } from "react";
+import { useRouter } from "next/navigation";
+import { ComponentType, useEffect } from "react";
 
 type SiteComponents = {
   [K in SiteType]?: ComponentType<any>;
@@ -16,14 +17,21 @@ export default function SiteWrapper({
   components: SiteComponents;
   fallback?: ComponentType<any>;
 }) {
+  const router = useRouter();
   const Component = components[site];
+
+  useEffect(() => {
+    if (!Component && !fallback) {
+      router.replace("/404");
+    }
+  }, [Component, fallback, router]);
 
   if (!Component) {
     if (fallback) {
       const Fallback = fallback;
       return <Fallback key={site} />;
     }
-    return <div>Page not available for this site.</div>;
+    return null;
   }
 
   return <Component key={site} />;
