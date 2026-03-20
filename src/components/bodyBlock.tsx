@@ -1,5 +1,21 @@
 import styled from "styled-components";
-import { BlockDiv } from "../commonStyles";
+import { BlockDiv } from "./commonStyles";
+import type { ComponentType } from "react";
+import type { ReactNode } from "react";
+
+export type BodyBlockProps = {
+  NavigationComponent: ComponentType;
+  children: ReactNode;
+};
+
+export function BodyBlock({ NavigationComponent, children }: BodyBlockProps) {
+  return (
+    <BodyDiv>
+      <NavigationComponent />
+      {children}
+    </BodyDiv>
+  );
+}
 
 export const BodyDiv = styled(BlockDiv)`
   display: flex;

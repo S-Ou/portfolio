@@ -46,17 +46,27 @@ const Subtitle = styled.p`
   font-weight: 500;
 `;
 
+export function SJOuNameCard() {
+  return (
+    <NameCard
+      profileImageUrl="/profile-sjou.jpg"
+      name="Samuel Ou"
+      subtitle="Software Engineer"
+    />
+  );
+}
+
+export function Rocked03NameCard() {
+  return <NameCard profileImageUrl="/profile-rocked03.png" name="Rocked03" />;
+}
+
 interface NameCardProps {
   profileImageUrl: string;
   name: string;
   subtitle?: string;
 }
 
-export default function NameCard({
-  profileImageUrl,
-  name,
-  subtitle,
-}: NameCardProps) {
+function NameCard({ profileImageUrl, name, subtitle }: NameCardProps) {
   return (
     <StyledNameCard>
       <ProfileImage src={profileImageUrl} alt={name} />

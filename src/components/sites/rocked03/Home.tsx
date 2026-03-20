@@ -1,21 +1,42 @@
 "use client";
 
-import BodyBlockRocked03 from "@/components/bodyBlock/bodyBlockRocked03";
-import InfoBlockRocked03 from "@/components/infoBlock/infoBlockRocked03";
-import NameCard from "@/components/nameCard";
-import HomeLayout from "@/components/sites/homeLayout";
+import {
+  BodyTextBlock,
+  BodyTextHeader,
+  BodyText,
+} from "@/components/bodyBlock";
+import { Rocked03PageLayout } from "@/components/pageLayout";
 
-function Rocked03NameCard() {
-  return <NameCard profileImageUrl="/profile-rocked03.png" name="Rocked03" />;
+function HomeBodyRocked03() {
+  // const stats = await getPlayerStats("rocked03");
+
+  return (
+    <>
+      <BodyTextBlock>
+        <BodyTextHeader>Hi, I'm Rocked.</BodyTextHeader>
+        <BodyText>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+          tincidunt rutrum dolor, non pulvinar nunc facilisis non. Vivamus vitae
+          elit dui. Nullam efficitur fermentum nunc, id volutpat odio cursus
+          non. In hac habitasse platea dictumst. Vivamus euismod tellus tempor
+          nunc congue ultricies. Sed faucibus fermentum dolor, vel pulvinar nunc
+          fermentum non. Donec et laoreet augue, sit amet finibus tortor. Donec
+          luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
+        </BodyText>
+      </BodyTextBlock>
+      {/* <div>
+        <h2>Rivals Tracker Stats:</h2>
+        <pre>{JSON.stringify(stats, null, 2)}</pre>
+      </div> */}
+    </>
+  );
 }
 
 export default function Rocked03Home() {
   return (
-    <HomeLayout
-      InfoBlock={InfoBlockRocked03}
-      BodyBlock={BodyBlockRocked03}
-      NameCardComponent={Rocked03NameCard}
-      copyrightName="Rocked03"
+    <Rocked03PageLayout
+      BodyContentComponent={HomeBodyRocked03}
+      showInfoBlockOnMobile={true}
     />
   );
 }

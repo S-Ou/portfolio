@@ -1,27 +1,38 @@
 "use client";
 
-import BodyBlockSJOu from "@/components/bodyBlock/bodyBlockSJOu";
-import InfoBlockSJOu from "@/components/infoBlock/infoBlockSJOu";
-import NameCard from "@/components/nameCard";
-import HomeLayout from "@/components/sites/homeLayout";
+import { SJOuPageLayout } from "@/components/pageLayout";
+import {
+  BodyTextBlock,
+  BodyTextHeader,
+  BodyText,
+} from "@/components/bodyBlock";
+import SkillsBlock from "@/components/skillsBlock";
 
-function SJOuNameCard() {
+function HomeBodySJOu() {
   return (
-    <NameCard
-      profileImageUrl="/profile-sjou.jpg"
-      name="Samuel Ou"
-      subtitle="Software Engineer"
-    />
+    <>
+      <BodyTextBlock>
+        <BodyTextHeader>Hi, I'm Samuel.</BodyTextHeader>
+        <BodyText>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+          tincidunt rutrum dolor, non pulvinar nunc facilisis non. Vivamus vitae
+          elit dui. Nullam efficitur fermentum nunc, id volutpat odio cursus
+          non. In hac habitasse platea dictumst. Vivamus euismod tellus tempor
+          nunc congue ultricies. Sed faucibus fermentum dolor, vel pulvinar nunc
+          fermentum non. Donec et laoreet augue, sit amet finibus tortor. Donec
+          luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
+        </BodyText>
+      </BodyTextBlock>
+      <SkillsBlock />
+    </>
   );
 }
 
 export default function SJOuHome() {
   return (
-    <HomeLayout
-      InfoBlock={InfoBlockSJOu}
-      BodyBlock={BodyBlockSJOu}
-      NameCardComponent={SJOuNameCard}
-      copyrightName="Samuel Ou"
+    <SJOuPageLayout
+      BodyContentComponent={HomeBodySJOu}
+      showInfoBlockOnMobile={true}
     />
   );
 }
