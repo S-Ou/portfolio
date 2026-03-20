@@ -13,11 +13,8 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
-  ProfileImage,
-  NameCard,
-  Title,
-  Subtitle,
   LinkButton,
+  type InfoBlockProps,
 } from "./infoBlock";
 
 function InfoTable() {
@@ -101,14 +98,10 @@ function LinkButtons() {
   );
 }
 
-export default function InfoBlockSJOu() {
+export default function InfoBlockSJOu({ NameCardComponent }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <ProfileImage src="/profile-sjou.jpg" alt="Your Name" />
-      <NameCard>
-        <Title>Samuel Ou</Title>
-        <Subtitle>Software Engineer</Subtitle>
-      </NameCard>
+      <NameCardComponent />
       <Line />
       <InfoTable />
       <Line />

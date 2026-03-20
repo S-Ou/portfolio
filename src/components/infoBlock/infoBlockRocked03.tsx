@@ -1,10 +1,9 @@
 import Line from "../line";
-import { Clock, Code, Link, Mail, MapPin } from "lucide-react";
+import { Clock, Code, Mail, MapPin } from "lucide-react";
 import {
   GitHubIcon,
   LetterboxdIcon,
   MarvelDiscordIcon,
-  RedditIcon,
   SteamIcon,
 } from "@/utils/icons";
 import { useEffect, useState } from "react";
@@ -12,10 +11,8 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
-  ProfileImage,
-  NameCard,
-  Title,
   LinkButton,
+  type InfoBlockProps,
 } from "./infoBlock";
 
 function InfoTable() {
@@ -96,13 +93,12 @@ function LinkButtons() {
   );
 }
 
-export default function InfoBlockRocked03() {
+export default function InfoBlockRocked03({
+  NameCardComponent,
+}: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <ProfileImage src="/profile-rocked03.png" alt="Your Name" />
-      <NameCard>
-        <Title>Rocked03</Title>
-      </NameCard>
+      <NameCardComponent />
       <Line />
       <InfoTable />
       <Line />

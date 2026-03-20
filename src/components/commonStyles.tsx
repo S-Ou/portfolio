@@ -5,4 +5,8 @@ export const BlockDiv = styled.div`
   border-radius: var(--corner-radius);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   padding: var(--corner-radius);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;

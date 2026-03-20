@@ -1,35 +1,16 @@
 import styled from "styled-components";
 import { BlockDiv } from "../commonStyles";
+import type { ComponentType } from "react";
+
+export type InfoBlockProps = {
+  NameCardComponent: ComponentType;
+};
 
 export const InfoBlockDiv = styled(BlockDiv)`
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
-`;
-
-export const ProfileImage = styled.img`
-  width: 100%;
-  border-radius: 100%;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-`;
-
-export const NameCard = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-`;
-
-export const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 800;
-`;
-
-export const Subtitle = styled.p`
-  font-size: 1.25rem;
-  font-weight: 500;
 `;
 
 export const StyledInfoTable = styled.table`
