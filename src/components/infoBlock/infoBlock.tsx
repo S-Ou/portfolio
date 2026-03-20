@@ -48,7 +48,7 @@ export const StyledInfoTable = styled.table`
   }
 
   @media (max-width: 768px) {
-    margin: 0 -1rem;
+    margin: 0 -1rem -1rem;
   }
 `;
 
