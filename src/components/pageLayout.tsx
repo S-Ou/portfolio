@@ -4,7 +4,7 @@ import Copyright from "@/components/copyright";
 import styled from "styled-components";
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import type { InfoBlockProps } from "@/components/infoBlock/infoBlock";
-import { BlockDiv } from "@/components/commonStyles";
+import { BlockDiv } from "@/components/styles";
 import { BodyBlock } from "@/components/bodyBlock";
 import InfoBlockSJOu from "./infoBlock/infoBlockSJOu";
 import { Rocked03NameCard, SJOuNameCard } from "./nameCard";

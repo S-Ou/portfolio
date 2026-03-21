@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BlockDiv } from "./commonStyles";
+import { BlockDiv } from "./styles";
 import type { ComponentType } from "react";
 import type { ReactNode } from "react";
 

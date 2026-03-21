@@ -7,6 +7,8 @@ import {
   BodyText,
 } from "@/components/bodyBlock";
 import SkillsBlock from "@/components/skillsBlock";
+import { LetterboxdDiaryWidget } from "@/components/widgets";
+import { CardsContainer } from "@/components/styles";
 
 function HomeBodySJOu() {
   return (
@@ -24,6 +26,9 @@ function HomeBodySJOu() {
         </BodyText>
       </BodyTextBlock>
       <SkillsBlock />
+      <CardsContainer>
+        <LetterboxdDiaryWidget />
+      </CardsContainer>
     </>
   );
 }

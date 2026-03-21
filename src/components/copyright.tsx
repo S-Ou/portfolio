@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BlockDiv } from "./commonStyles";
+import { BlockDiv } from "./styles";
 
 const CopyrightBlock = styled(BlockDiv)`
   color: rgba(var(--text-color-rgb), 0.75);

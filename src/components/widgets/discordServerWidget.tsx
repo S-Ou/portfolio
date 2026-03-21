@@ -2,20 +2,15 @@
 
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { BlockDiv } from "@/components/commonStyles";
 import { DiscordPartnerIcon } from "@/utils/icons";
 import { DiscordGuildInfo } from "@/lib/discord";
 import { Skeleton } from "@/components/skeleton";
+import { Chip, ChipContainer, LinkChip, WidgetCard } from "./styles";
+import { ExternalLink } from "lucide-react";
 
 type DiscordGuildApiError = {
   error: string;
 };
-
-const WidgetCard = styled(BlockDiv)`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-`;
 
 const BannerMedia = styled.div`
   margin-bottom: 2rem;
@@ -120,28 +115,6 @@ const ServerDescriptionSkeleton = styled(Skeleton)`
   }
 `;
 
-const Stats = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
-
-const StatChip = styled.span`
-  background: rgba(var(--text-color-rgb), 0.08);
-  border-radius: 999px;
-  font-size: 0.8rem;
-  padding: 0.35rem 0.65rem;
-`;
-
-const StatLinkChip = styled(StatChip).attrs({ as: "a" })`
-  display: inline-block;
-  transition: background 0.2s;
-
-  &:hover {
-    background: rgba(var(--text-color-rgb), 0.14);
-  }
-`;
-
 function formatNumber(value: number | null): string {
   if (value === null) {
     return "N/A";
@@ -217,14 +190,14 @@ export default function DiscordServerWidget() {
           <ServerNameSkeleton />
           <ServerDescriptionSkeleton />
 
-          <Stats>
+          <ChipContainer>
             <Skeleton>
-              <StatChip>100,000 members</StatChip>
+              <Chip>100,000 members</Chip>
             </Skeleton>
             <Skeleton>
-              <StatChip>discord.gg/marvel</StatChip>
+              <Chip>discord.gg/marvel</Chip>
             </Skeleton>
-          </Stats>
+          </ChipContainer>
         </>
       )}
       {!isLoading && error && <ServerDescription>{error}</ServerDescription>}
@@ -255,18 +228,19 @@ export default function DiscordServerWidget() {
             <ServerDescription>{data.description}</ServerDescription>
           )}
 
-          <Stats>
-            <StatChip>{formatNumber(data.memberCount)} members</StatChip>
+          <ChipContainer>
+            <Chip>{formatNumber(data.memberCount)} members</Chip>
             {data.vanityUrlCode && (
-              <StatLinkChip
+              <LinkChip
                 href={`https://discord.gg/${data.vanityUrlCode}`}
                 target="_blank"
                 rel="noreferrer"
               >
+                <ExternalLink size={12} />
                 discord.gg/{data.vanityUrlCode}
-              </StatLinkChip>
+              </LinkChip>
             )}
-          </Stats>
+          </ChipContainer>
         </>
       )}
     </WidgetCard>

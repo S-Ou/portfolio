@@ -5,29 +5,12 @@ import {
   BodyTextHeader,
   BodyText,
 } from "@/components/bodyBlock";
+import { CardsContainer } from "@/components/styles";
 import { Rocked03PageLayout } from "@/components/pageLayout";
-import DiscordServerWidget from "../../discordServerWidget";
-import styled from "styled-components";
-
-const StyledCardsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-
-  > * {
-    flex: 0 0 calc((100% - 1.5rem) / 2);
-    max-width: calc((100% - 1.5rem) / 2);
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-
-    > * {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-  }
-`;
+import {
+  DiscordServerWidget,
+  LetterboxdDiaryWidget,
+} from "@/components/widgets";
 
 function HomeBodyRocked03() {
   // const stats = await getPlayerStats("rocked03");
@@ -35,7 +18,7 @@ function HomeBodyRocked03() {
   return (
     <>
       <BodyTextBlock>
-        <BodyTextHeader>Hi, I'm Rocked.</BodyTextHeader>
+        <BodyTextHeader>Hi, I&apos;m Rocked.</BodyTextHeader>
         <BodyText>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
           tincidunt rutrum dolor, non pulvinar nunc facilisis non. Vivamus vitae
@@ -50,9 +33,10 @@ function HomeBodyRocked03() {
         <h2>Rivals Tracker Stats:</h2>
         <pre>{JSON.stringify(stats, null, 2)}</pre>
       </div> */}
-      <StyledCardsContainer>
+      <CardsContainer>
         <DiscordServerWidget />
-      </StyledCardsContainer>
+        <LetterboxdDiaryWidget />
+      </CardsContainer>
     </>
   );
 }
