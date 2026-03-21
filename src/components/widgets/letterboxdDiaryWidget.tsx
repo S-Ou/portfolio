@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ExternalLink, Projector, RefreshCw } from "lucide-react";
 import { Skeleton } from "@/components/skeleton";
-import { ChipContainer, LinkChip, WidgetCard } from "./styles";
+import { Chip, ChipContainer, LinkChip, WidgetCard } from "./styles";
 
 type LetterboxdDiaryFilm = {
   id: string;
@@ -168,6 +168,11 @@ export default function LetterboxdDiaryWidget() {
               </div>
             ))}
           </FilmsRow>
+          <ChipContainer>
+            <Skeleton>
+              <Chip>Rocked03 on Letterboxd</Chip>
+            </Skeleton>
+          </ChipContainer>
         </>
       )}
       {!isLoading && error && <ErrorText>{error}</ErrorText>}
