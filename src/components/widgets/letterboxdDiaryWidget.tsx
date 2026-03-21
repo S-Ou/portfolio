@@ -58,15 +58,6 @@ const ErrorText = styled.p`
   opacity: 0.8;
 `;
 
-const HeadingSkeleton = styled(Skeleton)`
-  display: block;
-  width: 12rem;
-
-  &:empty {
-    height: 1.5rem;
-  }
-`;
-
 const PosterSkeleton = styled(Skeleton)`
   border-radius: 0.65rem;
   display: block;
@@ -159,7 +150,6 @@ export default function LetterboxdDiaryWidget() {
     <WidgetCard>
       {isLoading && (
         <>
-          <HeadingSkeleton />
           <FilmsRow>
             {Array.from({ length: 12 }, (_, index) => (
               <div key={`skeleton-${index}`}>
@@ -178,7 +168,6 @@ export default function LetterboxdDiaryWidget() {
       {!isLoading && error && <ErrorText>{error}</ErrorText>}
       {!isLoading && !error && (
         <>
-          <h3>Recent movies watched</h3>
           <FilmsRow>
             {films.map((film) => (
               <FilmItem
