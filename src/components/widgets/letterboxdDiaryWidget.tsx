@@ -87,7 +87,7 @@ function formatWatchDate(dateValue: string): string {
   }
 
   return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
+    day: "numeric",
     month: "short",
     timeZone: "UTC",
   }).format(date);
