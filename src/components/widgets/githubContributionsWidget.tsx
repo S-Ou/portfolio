@@ -275,8 +275,7 @@ export default function GitHubContributionsWidget({
                     rel="noreferrer"
                     aria-label={`${account.username} GitHub profile`}
                   >
-                    <ExternalLinkIcon size={12} />
-                    {account.username} on GitHub
+                    <ExternalLinkIcon size={12} />@{account.username}
                   </ProfileChip>
                 </RowIdentity>
                 <RowStats>
