@@ -17,6 +17,7 @@ import {
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
+import Copyright from "../copyright";
 
 function InfoTable() {
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -109,6 +110,7 @@ export default function InfoBlockSJOu({ NameCardComponent }: InfoBlockProps) {
       <InfoTable />
       <Line />
       <LinkButtons />
+      <Copyright name="Samuel Ou" />
     </InfoBlockDiv>
   );
 }

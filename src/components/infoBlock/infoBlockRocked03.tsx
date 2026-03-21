@@ -15,6 +15,7 @@ import {
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
+import Copyright from "../copyright";
 
 function InfoTable() {
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -106,6 +107,7 @@ export default function InfoBlockRocked03({
       <InfoTable />
       <Line />
       <LinkButtons />
+      <Copyright name="Rocked03" />
     </InfoBlockDiv>
   );
 }

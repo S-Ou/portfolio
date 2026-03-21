@@ -16,7 +16,6 @@ type HomeLayoutProps = {
   BodyContentComponent: ComponentType;
   NavigationComponent: ComponentType;
   NameCardComponent: ComponentType;
-  copyrightName: string;
   showInfoBlockOnMobile?: boolean;
 };
 
@@ -45,7 +44,7 @@ const ContentGrid = styled.div`
   gap: 1.25rem;
   grid-template-areas:
     "info body"
-    "info copyright";
+    "info body";
   grid-template-columns: 300px 1fr;
   grid-template-rows: minmax(0, 1fr) auto;
   flex: 1;
@@ -57,8 +56,7 @@ const ContentGrid = styled.div`
     grid-template-areas:
       "name-card"
       "body"
-      "info"
-      "copyright";
+      "info";
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     min-height: auto;
@@ -94,16 +92,11 @@ const InfoSection = styled.div<{ $showOnMobile: boolean }>`
   }
 `;
 
-const CopyrightSection = styled.div`
-  grid-area: copyright;
-`;
-
 function PageLayout({
   InfoBlock,
   BodyContentComponent,
   NavigationComponent,
   NameCardComponent,
-  copyrightName,
   showInfoBlockOnMobile = false,
 }: HomeLayoutProps) {
   return (
@@ -120,9 +113,6 @@ function PageLayout({
             <BodyContentComponent />
           </BodyBlock>
         </BodySection>
-        <CopyrightSection>
-          <Copyright name={copyrightName} />
-        </CopyrightSection>
       </ContentGrid>
     </MainDiv>
   );
@@ -143,7 +133,6 @@ export function SJOuPageLayout({
       BodyContentComponent={BodyContentComponent}
       NavigationComponent={NavMenuSJOu}
       NameCardComponent={SJOuNameCard}
-      copyrightName="Samuel Ou"
       showInfoBlockOnMobile={showInfoBlockOnMobile}
     />
   );
@@ -159,7 +148,6 @@ export function Rocked03PageLayout({
       BodyContentComponent={BodyContentComponent}
       NavigationComponent={NavMenuRocked03}
       NameCardComponent={Rocked03NameCard}
-      copyrightName="Rocked03"
       showInfoBlockOnMobile={showInfoBlockOnMobile}
     />
   );
