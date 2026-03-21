@@ -12,6 +12,7 @@ type DiscordGuildApiResponse = {
   icon: string | null;
   splash: string | null;
   banner: string | null;
+  features?: string[];
   description: string | null;
   vanity_url_code: string | null;
   approximate_member_count?: number;
@@ -24,6 +25,7 @@ export type DiscordGuildInfo = {
   iconUrl: string | null;
   splashUrl: string | null;
   bannerUrl: string | null;
+  isPartner: boolean;
   description: string | null;
   vanityUrlCode: string | null;
   memberCount: number | null;
@@ -111,6 +113,7 @@ async function fetchGuildFromDiscord({
     iconUrl: buildGuildIconUrl(guild.id, guild.icon),
     splashUrl: buildGuildSplashUrl(guild.id, guild.splash),
     bannerUrl: buildGuildBannerUrl(guild.id, guild.banner),
+    isPartner: guild.features?.includes("PARTNERED") ?? false,
     description: guild.description,
     vanityUrlCode: guild.vanity_url_code,
     memberCount: guild.approximate_member_count ?? null,
