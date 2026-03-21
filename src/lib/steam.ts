@@ -21,6 +21,14 @@ type SteamOwnedGamesResponse = {
   };
 };
 
+type SteamPlayerSummaryResponse = {
+  response: {
+    players?: Array<{
+      profileurl?: string;
+    }>;
+  };
+};
+
 type SteamPlayerAchievement = {
   achieved: 0 | 1 | boolean;
 };
@@ -54,6 +62,7 @@ type SteamAppDetailsResponse = Record<
 
 type CacheEntry = {
   games: SteamWidgetGame[];
+  profileUrl: string;
   expiresAt: number;
 };
 
@@ -156,6 +165,32 @@ async function getOwnedGames({
 
   const data = await fetchJson<SteamOwnedGamesResponse>(url);
   return data.response.games ?? [];
+}
+
+async function getProfileUrl({
+  apiKey,
+  steamId,
+}: {
+  apiKey: string;
+  steamId: string;
+}): Promise<string> {
+  const url = buildSteamApiUrl("/ISteamUser/GetPlayerSummaries/v0002/", {
+    key: apiKey,
+    steamids: steamId,
+  });
+
+  try {
+    const data = await fetchJson<SteamPlayerSummaryResponse>(url);
+    const profileUrl = data.response.players?.[0]?.profileurl?.trim();
+
+    if (!profileUrl) {
+      return `https://steamcommunity.com/profiles/${steamId}/`;
+    }
+
+    return profileUrl;
+  } catch {
+    return `https://steamcommunity.com/profiles/${steamId}/`;
+  }
 }
 
 async function getUnlockedAchievementCount({
@@ -300,7 +335,7 @@ export async function getSteamWidgetGames({
   apiKey: string;
   steamId: string;
   forceRefresh?: boolean;
-}): Promise<{ games: SteamWidgetGame[]; fromCache: boolean }> {
+}): Promise<{ games: SteamWidgetGame[]; profileUrl: string; fromCache: boolean }> {
   const now = Date.now();
   const cacheKey = steamId;
   const cached = steamGamesCache.get(cacheKey);
@@ -308,13 +343,15 @@ export async function getSteamWidgetGames({
   if (!forceRefresh && cached && cached.expiresAt > now) {
     return {
       games: cached.games,
+      profileUrl: cached.profileUrl,
       fromCache: true,
     };
   }
 
-  const [recentGames, ownedGames] = await Promise.all([
+  const [recentGames, ownedGames, profileUrl] = await Promise.all([
     getRecentlyPlayedGames({ apiKey, steamId }),
     getOwnedGames({ apiKey, steamId }),
+    getProfileUrl({ apiKey, steamId }),
   ]);
 
   const selectedGames = selectGames(recentGames, ownedGames);
@@ -345,11 +382,13 @@ export async function getSteamWidgetGames({
 
   steamGamesCache.set(cacheKey, {
     games: gamesWithAchievementCounts,
+    profileUrl,
     expiresAt: now + CACHE_TTL_MS,
   });
 
   return {
     games: gamesWithAchievementCounts,
+    profileUrl,
     fromCache: false,
   };
 }

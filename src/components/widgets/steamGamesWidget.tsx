@@ -9,6 +9,7 @@ import { Chip, ChipContainer, LinkChip, WidgetCard } from "./styles";
 
 type SteamGamesApiResponse = {
   games: SteamWidgetGame[];
+  profileUrl: string;
 };
 
 type SteamGamesApiError = {
@@ -136,6 +137,9 @@ function getSteamStoreLink(appId: number): string {
 
 export default function SteamGamesWidget() {
   const [games, setGames] = useState<SteamWidgetGame[]>([]);
+  const [profileUrl, setProfileUrl] = useState<string>(
+    "https://steamcommunity.com/id/rocked03/",
+  );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -159,7 +163,9 @@ export default function SteamGamesWidget() {
           return;
         }
 
-        setGames((payload as SteamGamesApiResponse).games);
+        const steamPayload = payload as SteamGamesApiResponse;
+        setGames(steamPayload.games);
+        setProfileUrl(steamPayload.profileUrl);
         setError(null);
       } catch (fetchError) {
         if (!isMounted) {
@@ -246,7 +252,7 @@ export default function SteamGamesWidget() {
 
           <ChipContainer>
             <LinkChip
-              href="https://store.steampowered.com/"
+              href={profileUrl}
               target="_blank"
               rel="noreferrer"
             >

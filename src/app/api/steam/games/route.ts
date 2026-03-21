@@ -24,7 +24,7 @@ export async function GET() {
       );
     }
 
-    const { games, fromCache } = await getSteamWidgetGames({
+    const { games, profileUrl, fromCache } = await getSteamWidgetGames({
       apiKey,
       steamId,
       forceRefresh: false,
@@ -33,6 +33,7 @@ export async function GET() {
     return NextResponse.json(
       {
         games,
+        profileUrl,
         fromCache,
       },
       {
