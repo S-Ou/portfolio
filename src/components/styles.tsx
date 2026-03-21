@@ -12,21 +12,20 @@ export const BlockDiv = styled.div`
 `;
 
 export const CardsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  column-count: 2;
+  column-gap: 1.5rem;
 
   > * {
-    flex: 0 0 calc((100% - 1.5rem) / 2);
-    max-width: calc((100% - 1.5rem) / 2);
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    column-count: 1;
 
     > * {
-      flex: 0 0 100%;
-      max-width: 100%;
+      margin-bottom: 1rem;
     }
   }
 `;

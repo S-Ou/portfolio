@@ -36,8 +36,8 @@ function HomeBodyRocked03() {
       </div> */}
       <CardsContainer>
         <DiscordServerWidget />
-        <LetterboxdDiaryWidget />
         <SteamGamesWidget />
+        <LetterboxdDiaryWidget />
       </CardsContainer>
     </>
   );

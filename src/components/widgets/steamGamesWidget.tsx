@@ -203,7 +203,7 @@ export default function SteamGamesWidget() {
           </GamesList>
           <ChipContainer>
             <Skeleton>
-              <Chip>View on Steam</Chip>
+              <Chip>Rocked03 on Steam</Chip>
             </Skeleton>
           </ChipContainer>
         </>
@@ -250,7 +250,7 @@ export default function SteamGamesWidget() {
               target="_blank"
               rel="noreferrer"
             >
-              <ExternalLink size={12} /> View on Steam
+              <ExternalLink size={12} /> Rocked03 on Steam
             </LinkChip>
           </ChipContainer>
         </>
