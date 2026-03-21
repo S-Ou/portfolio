@@ -36,6 +36,31 @@ const Header = styled.p`
   font-weight: 600;
 `;
 
+const HeaderSkeleton = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const HeaderIconSkeleton = styled(Skeleton)`
+  border-radius: 999px;
+  display: block;
+  width: 1.25rem;
+
+  &:empty {
+    height: 1.25rem;
+  }
+`;
+
+const HeaderTextSkeleton = styled(Skeleton)`
+  display: block;
+  width: 4rem;
+
+  &:empty {
+    height: 1rem;
+  }
+`;
+
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,10 +106,23 @@ const RowStats = styled.div`
 `;
 
 const RowSkeleton = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: grid;
   gap: 0.75rem;
   grid-template-columns: minmax(0, 1fr) auto;
+`;
+
+const RowIdentitySkeleton = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+`;
+
+const RowStatsSkeleton = styled.div`
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 `;
 
 const UsernameSkeleton = styled(Skeleton)`
@@ -96,9 +134,19 @@ const UsernameSkeleton = styled(Skeleton)`
   }
 `;
 
-const CountSkeleton = styled(Skeleton)`
+const ProfileChipSkeleton = styled(Skeleton)`
+  border-radius: 999px;
   display: block;
-  width: 8rem;
+  width: 8.75rem;
+
+  &:empty {
+    height: 1.45rem;
+  }
+`;
+
+const StatCountSkeleton = styled(Skeleton)<{ $width: string }>`
+  display: block;
+  width: ${({ $width }) => $width};
 
   &:empty {
     height: 0.95rem;
@@ -187,11 +235,22 @@ export default function GitHubContributionsWidget({
     <WidgetCard>
       {isLoading && (
         <>
+          <HeaderSkeleton>
+            <HeaderIconSkeleton />
+            <HeaderTextSkeleton />
+          </HeaderSkeleton>
           <Rows>
             {Array.from({ length: usernames.length }, (_, index) => (
               <RowSkeleton key={`github-skeleton-${index}`}>
-                <UsernameSkeleton />
-                <CountSkeleton />
+                <RowIdentitySkeleton>
+                  <UsernameSkeleton />
+                  <ProfileChipSkeleton />
+                </RowIdentitySkeleton>
+                <RowStatsSkeleton>
+                  <StatCountSkeleton $width="13rem" />
+                  <StatCountSkeleton $width="5.5rem" />
+                  <StatCountSkeleton $width="4.5rem" />
+                </RowStatsSkeleton>
               </RowSkeleton>
             ))}
           </Rows>
