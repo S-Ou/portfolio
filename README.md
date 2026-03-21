@@ -29,3 +29,21 @@ pnpm dev:rocked03
 ```
 
 These scripts set `NEXT_PUBLIC_SITE` to choose which site variant is served.
+
+## Discord server widget API
+
+Endpoint: `/api/discord/server`
+
+Returns cached Discord guild info for guild `281648235557421056` (name, icon, banner/splash, member and online counts).
+
+Setup (`.env.local`):
+
+```bash
+DISCORD_BOT_TOKEN=your_bot_token
+```
+
+Notes:
+
+- Token is server-only (env var only).
+- Endpoint is GET-only.
+- Response cache TTL is 1 hour (in-memory).
