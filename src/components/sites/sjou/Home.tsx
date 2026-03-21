@@ -7,7 +7,10 @@ import {
   BodyText,
 } from "@/components/bodyBlock";
 import SkillsBlock from "@/components/skillsBlock";
-import { LetterboxdDiaryWidget } from "@/components/widgets";
+import {
+  GitHubContributionsWidget,
+  LetterboxdDiaryWidget,
+} from "@/components/widgets";
 import { CardsContainer } from "@/components/styles";
 
 function HomeBodySJOu() {
@@ -27,6 +30,7 @@ function HomeBodySJOu() {
       </BodyTextBlock>
       <SkillsBlock />
       <CardsContainer>
+        <GitHubContributionsWidget usernames={["S-Ou", "Rocked03"]} />
         <LetterboxdDiaryWidget />
       </CardsContainer>
     </>

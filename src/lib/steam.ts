@@ -335,7 +335,11 @@ export async function getSteamWidgetGames({
   apiKey: string;
   steamId: string;
   forceRefresh?: boolean;
-}): Promise<{ games: SteamWidgetGame[]; profileUrl: string; fromCache: boolean }> {
+}): Promise<{
+  games: SteamWidgetGame[];
+  profileUrl: string;
+  fromCache: boolean;
+}> {
   const now = Date.now();
   const cacheKey = steamId;
   const cached = steamGamesCache.get(cacheKey);

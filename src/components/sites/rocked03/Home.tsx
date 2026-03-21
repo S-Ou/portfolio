@@ -9,6 +9,7 @@ import { CardsContainer } from "@/components/styles";
 import { Rocked03PageLayout } from "@/components/pageLayout";
 import {
   DiscordServerWidget,
+  GitHubContributionsWidget,
   LetterboxdDiaryWidget,
   SteamGamesWidget,
 } from "@/components/widgets";
@@ -37,6 +38,7 @@ function HomeBodyRocked03() {
       <CardsContainer>
         <DiscordServerWidget />
         <SteamGamesWidget />
+        <GitHubContributionsWidget usernames={["Rocked03"]} />
         <LetterboxdDiaryWidget />
       </CardsContainer>
     </>

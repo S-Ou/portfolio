@@ -251,11 +251,7 @@ export default function SteamGamesWidget() {
           </GamesList>
 
           <ChipContainer>
-            <LinkChip
-              href={profileUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <LinkChip href={profileUrl} target="_blank" rel="noreferrer">
               <ExternalLink size={12} /> Rocked03 on Steam
             </LinkChip>
           </ChipContainer>
