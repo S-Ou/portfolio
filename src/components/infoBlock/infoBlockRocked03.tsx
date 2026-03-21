@@ -45,25 +45,25 @@ function InfoTable() {
       <tbody>
         <tr>
           <td>
-            <MapPin size={24} />
+            <MapPin size={20} />
           </td>
           <td>Auckland, New Zealand</td>
         </tr>
         <tr>
           <td>
-            <Code size={24} />
+            <Code size={20} />
           </td>
           <td>Professional Software Developer</td>
         </tr>
         <tr>
           <td>
-            <MarvelDiscordIcon size={24} />
+            <MarvelDiscordIcon size={20} />
           </td>
           <td>Marvel Discord Manager</td>
         </tr>
         <tr>
           <td>
-            <Clock size={24} />
+            <Clock size={20} />
           </td>
           <td>{currentTime || "Loading..."}</td>
         </tr>
