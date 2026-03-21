@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { BlockDiv } from "@/components/commonStyles";
 import { DiscordPartnerIcon } from "@/utils/icons";
 import { DiscordGuildInfo } from "@/lib/discord";
+import { Skeleton } from "@/components/skeleton";
 
 type DiscordGuildApiError = {
   error: string;
@@ -24,16 +25,18 @@ const BannerMedia = styled.div`
 const sharedBannerStyles = css`
   width: 100%;
   border-radius: 0.8rem;
+  overflow: hidden;
 `;
 
 const BannerImage = styled.img`
   ${sharedBannerStyles}
+  display: block;
+  height: 100%;
   object-fit: cover;
 `;
 
 const BannerFallback = styled.div`
   ${sharedBannerStyles}
-  height: 7.4rem;
   background:
     linear-gradient(
       135deg,
@@ -67,6 +70,24 @@ const FallbackIcon = styled.div`
   place-items: center;
 `;
 
+const BannerSkeleton = styled(Skeleton)`
+  ${sharedBannerStyles}
+  aspect-ratio: 16 / 9;
+  display: block;
+
+  &:empty {
+    height: auto;
+  }
+`;
+
+const IconSkeleton = styled(Skeleton)`
+  ${sharedIconStyles}
+
+  &:empty {
+    height: 5rem;
+  }
+`;
+
 const ServerName = styled.div`
   align-items: center;
   display: flex;
@@ -79,6 +100,24 @@ const ServerDescription = styled.p`
   font-size: 0.9rem;
   line-height: 1.4;
   opacity: 0.8;
+`;
+
+const ServerNameSkeleton = styled(Skeleton)`
+  display: block;
+  width: 62%;
+
+  &:empty {
+    height: 1.5rem;
+  }
+`;
+
+const ServerDescriptionSkeleton = styled(Skeleton)`
+  display: block;
+  width: 92%;
+
+  &:empty {
+    height: 1rem;
+  }
 `;
 
 const Stats = styled.div`
@@ -168,7 +207,26 @@ export default function DiscordServerWidget() {
 
   return (
     <WidgetCard>
-      {isLoading && <p>Loading server details...</p>}
+      {isLoading && (
+        <>
+          <BannerMedia>
+            <BannerSkeleton />
+            <IconSkeleton />
+          </BannerMedia>
+
+          <ServerNameSkeleton />
+          <ServerDescriptionSkeleton />
+
+          <Stats>
+            <Skeleton>
+              <StatChip>100,000 members</StatChip>
+            </Skeleton>
+            <Skeleton>
+              <StatChip>discord.gg/marvel</StatChip>
+            </Skeleton>
+          </Stats>
+        </>
+      )}
       {!isLoading && error && <ServerDescription>{error}</ServerDescription>}
       {!isLoading && !error && data && (
         <>
