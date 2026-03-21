@@ -4,18 +4,22 @@ import { SiteType } from "@/lib/site";
 import { useRouter } from "next/navigation";
 import { ComponentType, useEffect } from "react";
 
-type SiteComponents = {
-  [K in SiteType]?: ComponentType<any>;
+type SiteComponents<TProps extends object = Record<string, never>> = {
+  [K in SiteType]?: ComponentType<TProps>;
 };
 
-export default function SiteWrapper({
+export default function SiteWrapper<
+  TProps extends object = Record<string, never>,
+>({
   site,
   components,
+  componentProps,
   fallback,
 }: {
   site: SiteType;
-  components: SiteComponents;
-  fallback?: ComponentType<any>;
+  components: SiteComponents<TProps>;
+  componentProps?: TProps;
+  fallback?: ComponentType<TProps>;
 }) {
   const router = useRouter();
   const Component = components[site];
@@ -29,10 +33,10 @@ export default function SiteWrapper({
   if (!Component) {
     if (fallback) {
       const Fallback = fallback;
-      return <Fallback key={site} />;
+      return <Fallback key={site} {...(componentProps ?? ({} as TProps))} />;
     }
     return null;
   }
 
-  return <Component key={site} />;
+  return <Component key={site} {...(componentProps ?? ({} as TProps))} />;
 }

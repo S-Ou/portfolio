@@ -201,13 +201,15 @@ function PageLayout({
   );
 }
 
+export interface PageLayoutProps {
+  BodyContentComponent: ComponentType;
+  showInfoBlockOnMobile?: boolean;
+}
+
 export function SJOuPageLayout({
   BodyContentComponent,
   showInfoBlockOnMobile = false,
-}: {
-  BodyContentComponent: ComponentType;
-  showInfoBlockOnMobile?: boolean;
-}) {
+}: PageLayoutProps) {
   return (
     <PageLayout
       InfoBlock={InfoBlockSJOu}
@@ -223,10 +225,7 @@ export function SJOuPageLayout({
 export function Rocked03PageLayout({
   BodyContentComponent,
   showInfoBlockOnMobile = false,
-}: {
-  BodyContentComponent: ComponentType;
-  showInfoBlockOnMobile?: boolean;
-}) {
+}: PageLayoutProps) {
   return (
     <PageLayout
       InfoBlock={InfoBlockRocked03}

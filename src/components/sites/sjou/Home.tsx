@@ -30,9 +30,6 @@ function HomeBodySJOu() {
 
 export default function SJOuHome() {
   return (
-    <SJOuPageLayout
-      BodyContentComponent={HomeBodySJOu}
-      showInfoBlockOnMobile={true}
-    />
+    <SJOuPageLayout BodyContentComponent={HomeBodySJOu} showInfoBlockOnMobile />
   );
 }

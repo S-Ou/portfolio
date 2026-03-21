@@ -36,7 +36,7 @@ export default function Rocked03Home() {
   return (
     <Rocked03PageLayout
       BodyContentComponent={HomeBodyRocked03}
-      showInfoBlockOnMobile={true}
+      showInfoBlockOnMobile
     />
   );
 }

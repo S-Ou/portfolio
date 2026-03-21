@@ -1,18 +1,6 @@
-import SiteWrapper from "@/components/siteWrapper";
-import Rocked03NotFound from "@/components/sites/rocked03/NotFound";
-import SJOuNotFound from "@/components/sites/sjou/NotFound";
-import { getSite } from "@/lib/site";
+import NotFoundBody from "@/components/notFoundBody";
+import SharedPage from "@/components/sites/sharedPage";
 
 export default async function NotFound() {
-  const site = await getSite();
-
-  return (
-    <SiteWrapper
-      site={site}
-      components={{
-        sjou: SJOuNotFound,
-        rocked03: Rocked03NotFound,
-      }}
-    />
-  );
+  return <SharedPage BodyContentComponent={NotFoundBody} />;
 }
