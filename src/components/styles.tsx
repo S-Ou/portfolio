@@ -14,6 +14,7 @@ export const BlockDiv = styled.div`
 export const CardsContainer = styled.div`
   column-count: 2;
   column-gap: 1.5rem;
+  margin-bottom: -1.5rem;
 
   > * {
     break-inside: avoid;
@@ -23,6 +24,7 @@ export const CardsContainer = styled.div`
 
   @media (max-width: 768px) {
     column-count: 1;
+    margin-bottom: -1rem;
 
     > * {
       margin-bottom: 1rem;
