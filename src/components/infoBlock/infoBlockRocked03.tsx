@@ -12,6 +12,7 @@ import {
   InfoBlockDiv,
   LinkButton,
   type InfoBlockProps,
+  NameCardSection,
 } from "./infoBlock";
 import Copyright from "../copyright";
 
@@ -98,7 +99,9 @@ export default function InfoBlockRocked03({
 }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardComponent />
+      <NameCardSection>
+        <NameCardComponent />
+      </NameCardSection>
       <InfoTable />
       <LinkButtons />
       <Copyright name="Rocked03" />

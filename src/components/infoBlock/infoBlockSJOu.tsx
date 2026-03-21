@@ -14,6 +14,7 @@ import {
   InfoBlockDiv,
   LinkButton,
   type InfoBlockProps,
+  NameCardSection,
 } from "./infoBlock";
 import Copyright from "../copyright";
 
@@ -101,7 +102,9 @@ function LinkButtons() {
 export default function InfoBlockSJOu({ NameCardComponent }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardComponent />
+      <NameCardSection>
+        <NameCardComponent />
+      </NameCardSection>
       <InfoTable />
       <LinkButtons />
       <Copyright name="Samuel Ou" />

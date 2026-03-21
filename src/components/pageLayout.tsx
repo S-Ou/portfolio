@@ -32,6 +32,7 @@ const MainDiv = styled.div`
 
   @media (max-width: 768px) {
     padding: 1rem;
+    height: 100%;
   }
 
   @media (max-height: 1200px) {
