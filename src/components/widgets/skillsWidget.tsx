@@ -1,34 +1,17 @@
+"use client";
+
 import { useState } from "react";
 import styled from "styled-components";
-import { SegmentedControl } from "./segmentedControl";
+import { SegmentedControl } from "@/components/segmentedControl";
+import { Chip, ChipContainer, WidgetCard } from "./styles";
 
-const StyledSkillsBlock = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0 auto;
-  width: fit-content;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const SkillPillContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+const StyledChipContainer = styled(ChipContainer)`
   justify-content: center;
   max-width: 300px;
+  margin: 0 auto;
 `;
 
-const StyledSkillPill = styled.div<{ $index: number }>`
-  background-color: var(--background);
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+const AnimatedSkillPill = styled(Chip)<{ $index: number }>`
   animation: fadeIn 750ms ease-out forwards;
   animation-delay: ${({ $index }) => ($index + 1) * 75}ms;
   opacity: 0;
@@ -53,20 +36,22 @@ const skillsContent = {
   ],
   tools: ["Figma", "Photoshop", "After Effects", "Premiere Pro", "Audacity"],
   music: ["Alto Saxophone", "Baritone Saxophone", "Soprano Saxophone", "Piano"],
-};
+} as const;
+
+type SkillView = keyof typeof skillsContent;
 
 function SkillPill({ value, index }: { value: string; index: number }) {
-  return <StyledSkillPill $index={index}>{value}</StyledSkillPill>;
+  return <AnimatedSkillPill $index={index}>{value}</AnimatedSkillPill>;
 }
 
-export default function SkillsBlock() {
-  const [view, setView] = useState("languages");
+export default function SkillsWidget() {
+  const [view, setView] = useState<SkillView>("languages");
 
   return (
-    <StyledSkillsBlock>
+    <WidgetCard>
       <SegmentedControl.Root
         value={view}
-        onValueChange={setView}
+        onValueChange={(nextView) => setView(nextView as SkillView)}
         aria-label="View mode"
       >
         <SegmentedControl.Item value="languages">
@@ -82,13 +67,11 @@ export default function SkillsBlock() {
         <SegmentedControl.Item value="music">Music</SegmentedControl.Item>
       </SegmentedControl.Root>
 
-      <SkillPillContainer key={view}>
-        {skillsContent[view as keyof typeof skillsContent].map(
-          (skill, index) => (
-            <SkillPill key={skill} value={skill} index={index} />
-          ),
-        )}
-      </SkillPillContainer>
-    </StyledSkillsBlock>
+      <StyledChipContainer key={view}>
+        {skillsContent[view].map((skill, index) => (
+          <SkillPill key={skill} value={skill} index={index} />
+        ))}
+      </StyledChipContainer>
+    </WidgetCard>
   );
 }

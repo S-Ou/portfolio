@@ -6,10 +6,10 @@ import {
   BodyTextHeader,
   BodyText,
 } from "@/components/bodyBlock";
-import SkillsBlock from "@/components/skillsBlock";
 import {
   GitHubContributionsWidget,
   LetterboxdDiaryWidget,
+  SkillsWidget,
 } from "@/components/widgets";
 import { CardsContainer } from "@/components/styles";
 
@@ -28,8 +28,8 @@ function HomeBodySJOu() {
           luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
         </BodyText>
       </BodyTextBlock>
-      <SkillsBlock />
       <CardsContainer>
+        <SkillsWidget />
         <GitHubContributionsWidget usernames={["S-Ou", "Rocked03"]} />
         <LetterboxdDiaryWidget />
       </CardsContainer>

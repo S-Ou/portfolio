@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BlockDiv } from "../styles";
 
 export const WidgetCard = styled(BlockDiv)`
+  background: rgba(var(--text-color-rgb), 0.02);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
