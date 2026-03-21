@@ -42,11 +42,9 @@ const MainDiv = styled.div`
 const ContentGrid = styled.div`
   display: grid;
   gap: 1.25rem;
-  grid-template-areas:
-    "info body"
-    "info body";
+  grid-template-areas: "info body";
   grid-template-columns: 300px 1fr;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: 1fr;
   flex: 1;
   min-height: 0;
 
@@ -75,11 +73,15 @@ const MobileNameCardBlock = styled(BlockDiv)`
 const BodySection = styled.div`
   grid-area: body;
   min-height: 0;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     min-height: auto;
+    height: auto;
     overflow: auto;
   }
 `;
