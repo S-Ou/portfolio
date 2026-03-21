@@ -6,9 +6,11 @@ import { SegmentedControl } from "@/components/segmentedControl";
 import { Chip, ChipContainer, WidgetCard } from "./styles";
 
 const StyledChipContainer = styled(ChipContainer)`
+  align-content: flex-start;
   justify-content: center;
   max-width: 300px;
   margin: 0 auto;
+  min-height: 4rem;
 `;
 
 const AnimatedSkillPill = styled(Chip)<{ $index: number }>`

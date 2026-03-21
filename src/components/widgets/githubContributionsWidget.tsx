@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Skeleton } from "@/components/skeleton";
-import { WidgetCard } from "./styles";
+import { LinkChip, WidgetCard } from "./styles";
 import { GitHubIcon } from "@/utils/icons";
+import { ExternalLinkIcon } from "lucide-react";
 
 type GitHubContributionAccount = {
   username: string;
@@ -41,21 +42,22 @@ const Rows = styled.div`
   gap: 0.75rem;
 `;
 
-const Row = styled.a`
+const Row = styled.div`
   align-items: flex-start;
   color: inherit;
   display: grid;
   gap: 0.75rem;
   grid-template-columns: minmax(0, 1fr) auto;
-  text-decoration: none;
+`;
 
-  &:hover {
-    opacity: 0.9;
-  }
+const RowIdentity = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 `;
 
 const RowLabel = styled.span`
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 `;
 
@@ -63,6 +65,11 @@ const RowValue = styled.span`
   display: block;
   font-size: 0.9rem;
   opacity: 0.88;
+`;
+
+const ProfileChip = styled(LinkChip)`
+  font-size: 0.75rem;
+  width: fit-content;
 `;
 
 const RowStats = styled.div`
@@ -200,14 +207,19 @@ export default function GitHubContributionsWidget({
           </Header>
           <Rows>
             {accounts.map((account) => (
-              <Row
-                key={account.username}
-                href={account.profileUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${account.username} GitHub profile`}
-              >
-                <RowLabel>{account.username}</RowLabel>
+              <Row key={account.username}>
+                <RowIdentity>
+                  <RowLabel>{account.username}</RowLabel>
+                  <ProfileChip
+                    href={account.profileUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${account.username} GitHub profile`}
+                  >
+                    <ExternalLinkIcon size={12} />
+                    {account.username} on GitHub
+                  </ProfileChip>
+                </RowIdentity>
                 <RowStats>
                   <RowValue>
                     {formatContributionCount(account.contributionCountPastYear)}
