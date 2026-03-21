@@ -22,7 +22,8 @@ export const BodyDiv = styled(BlockDiv)`
   flex-direction: column;
   flex: 1;
   gap: 1rem;
-  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 export const BodyTextBlock = styled.div`

@@ -2,7 +2,7 @@
 
 import Copyright from "@/components/copyright";
 import styled from "styled-components";
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { InfoBlockProps } from "@/components/infoBlock/infoBlock";
 import { BlockDiv } from "@/components/styles";
 import { BodyBlock } from "@/components/bodyBlock";
@@ -20,24 +20,27 @@ type HomeLayoutProps = {
   showInfoBlockOnMobile?: boolean;
 };
 
-const MainDiv = styled.div<{ $vPadding: number }>`
+const MainDiv = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1200px;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding-block: ${({ $vPadding }) => `${$vPadding}px`};
+  height: calc(100vh);
+  height: calc(100dvh);
+  padding-block: 8rem;
   padding-inline: 1rem;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     padding: 1rem;
   }
+
+  @media (max-height: 1200px) {
+    padding-block: 1rem;
+  }
 `;
 
-const ContentGrid = styled.div<{
-  $fillRemainingHeight: boolean;
-  $vPadding: number;
-}>`
+const ContentGrid = styled.div`
   display: grid;
   gap: 1.25rem;
   grid-template-areas:
@@ -45,16 +48,8 @@ const ContentGrid = styled.div<{
     "info copyright";
   grid-template-columns: 300px 1fr;
   grid-template-rows: minmax(0, 1fr) auto;
-
-  ${({ $fillRemainingHeight, $vPadding }) =>
-    $fillRemainingHeight
-      ? `
-    min-height: calc(100vh - ${$vPadding * 2}px);
-    min-height: calc(100dvh - ${$vPadding * 2}px);
-  `
-      : `
-    min-height: auto;
-  `}
+  flex: 1;
+  min-height: 0;
 
   @media (max-width: 768px) {
     align-content: start;
@@ -82,9 +77,12 @@ const MobileNameCardBlock = styled(BlockDiv)`
 const BodySection = styled.div`
   grid-area: body;
   min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     min-height: auto;
+    overflow: auto;
   }
 `;
 
@@ -108,80 +106,9 @@ function PageLayout({
   copyrightName,
   showInfoBlockOnMobile = false,
 }: HomeLayoutProps) {
-  const contentGridRef = useRef<HTMLDivElement>(null);
-  const [vPadding, setVPadding] = useState(128);
-  const [fillRemainingHeight, setFillRemainingHeight] = useState(true);
-
-  useEffect(() => {
-    const updateLayout = () => {
-      const contentGrid = contentGridRef.current;
-
-      if (!contentGrid) {
-        return;
-      }
-
-      const isMobile = window.innerWidth <= 768;
-      const rootFontSize = Number.parseFloat(
-        getComputedStyle(document.documentElement).fontSize,
-      );
-      const rem = Number.isFinite(rootFontSize) ? rootFontSize : 16;
-      const minPad = rem;
-      const maxPad = rem * 8;
-
-      if (isMobile) {
-        setVPadding(minPad);
-        setFillRemainingHeight(false);
-        return;
-      }
-
-      const previousMinHeight = contentGrid.style.minHeight;
-      contentGrid.style.minHeight = "auto";
-      const minimumMainHeight = contentGrid.scrollHeight;
-      contentGrid.style.minHeight = previousMinHeight;
-
-      const viewportHeight = window.innerHeight;
-
-      if (viewportHeight >= minimumMainHeight + maxPad * 2) {
-        setVPadding(maxPad);
-        setFillRemainingHeight(true);
-        return;
-      }
-
-      if (viewportHeight >= minimumMainHeight + minPad * 2) {
-        setVPadding((viewportHeight - minimumMainHeight) / 2);
-        setFillRemainingHeight(false);
-        return;
-      }
-
-      setVPadding(minPad);
-      setFillRemainingHeight(false);
-    };
-
-    updateLayout();
-
-    const resizeObserver = new ResizeObserver(() => {
-      updateLayout();
-    });
-
-    if (contentGridRef.current) {
-      resizeObserver.observe(contentGridRef.current);
-    }
-
-    window.addEventListener("resize", updateLayout);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", updateLayout);
-    };
-  }, []);
-
   return (
-    <MainDiv $vPadding={vPadding}>
-      <ContentGrid
-        ref={contentGridRef}
-        $fillRemainingHeight={fillRemainingHeight}
-        $vPadding={vPadding}
-      >
+    <MainDiv>
+      <ContentGrid>
         <MobileNameCardBlock>
           <NameCardComponent />
         </MobileNameCardBlock>
