@@ -18,22 +18,12 @@ export const InfoBlockDiv = styled(BlockDiv)`
   }
 `;
 
-export const NameCardSection = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
 export const StyledInfoTable = styled.table`
   border-collapse: separate;
   border-spacing: 0.5rem 0.5rem;
+  font-size: 0.9rem;
   margin: -1rem;
+  opacity: 0.9;
   width: 100%;
 
   td {

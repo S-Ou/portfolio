@@ -1,4 +1,3 @@
-import Line from "../line";
 import { Clock, Code, Mail, MapPin } from "lucide-react";
 import {
   GitHubIcon,
@@ -11,7 +10,6 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
-  NameCardSection,
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
@@ -100,12 +98,8 @@ export default function InfoBlockRocked03({
 }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardSection>
-        <NameCardComponent />
-        <Line />
-      </NameCardSection>
+      <NameCardComponent />
       <InfoTable />
-      <Line />
       <LinkButtons />
       <Copyright name="Rocked03" />
     </InfoBlockDiv>

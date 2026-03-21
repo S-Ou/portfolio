@@ -1,4 +1,3 @@
-import Line from "../line";
 import {
   Briefcase,
   Clock,
@@ -13,7 +12,6 @@ import {
   StyledInfoTable,
   StyledLinkButtons,
   InfoBlockDiv,
-  NameCardSection,
   LinkButton,
   type InfoBlockProps,
 } from "./infoBlock";
@@ -48,31 +46,31 @@ function InfoTable() {
       <tbody>
         <tr>
           <td>
-            <MapPin size={24} />
+            <MapPin size={20} />
           </td>
           <td>Auckland, New Zealand</td>
         </tr>
         <tr>
           <td>
-            <GraduationCap size={24} />
+            <GraduationCap size={20} />
           </td>
           <td>Bachelor of Engineering BE(Hons)</td>
         </tr>
         <tr>
           <td>
-            <University size={24} />
+            <University size={20} />
           </td>
           <td>University of Auckland</td>
         </tr>
         <tr>
           <td>
-            <Briefcase size={24} />
+            <Briefcase size={20} />
           </td>
           <td>Vista Group</td>
         </tr>
         <tr>
           <td>
-            <Clock size={24} />
+            <Clock size={20} />
           </td>
           <td>{currentTime || "Loading..."}</td>
         </tr>
@@ -103,12 +101,8 @@ function LinkButtons() {
 export default function InfoBlockSJOu({ NameCardComponent }: InfoBlockProps) {
   return (
     <InfoBlockDiv>
-      <NameCardSection>
-        <NameCardComponent />
-        <Line />
-      </NameCardSection>
+      <NameCardComponent />
       <InfoTable />
-      <Line />
       <LinkButtons />
       <Copyright name="Samuel Ou" />
     </InfoBlockDiv>
