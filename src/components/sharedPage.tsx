@@ -3,8 +3,8 @@ import {
   PageLayoutProps,
   Rocked03PageLayout,
   SJOuPageLayout,
-} from "../pageLayout";
-import SiteWrapper from "../siteWrapper";
+} from "./pageLayout";
+import SiteWrapper from "./siteWrapper";
 
 export default async function SharedPage({
   BodyContentComponent,

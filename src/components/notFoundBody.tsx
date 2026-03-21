@@ -8,6 +8,7 @@ const NotFoundStyled = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: center;
+  padding-top: 5rem;
   padding-bottom: 10rem;
 
   h1 {
