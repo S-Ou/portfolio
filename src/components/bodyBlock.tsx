@@ -41,10 +41,10 @@ export const BodyTextHeader = styled.h1`
   font-size: 2rem;
 `;
 
-export const BodyText = styled.p`
-  font-size: 1.25rem;
-  line-height: 1.5;
+export const BodyText = styled.div`
   display: flex;
   flex-direction: column;
+  font-size: 1.25rem;
   gap: 1.25rem;
+  line-height: 1.5;
 `;
