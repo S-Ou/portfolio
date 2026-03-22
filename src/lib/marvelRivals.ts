@@ -897,6 +897,8 @@ async function aggregateWidgetStats(
   snapshots: SeasonSnapshot[],
   apiKey: string,
   fallbackPlayerUid: string,
+  allSnapshotsForHighestRank?: SeasonSnapshot[],
+  requestedSeasonResponseNumber?: number,
 ): Promise<MarvelRivalsWidgetStats> {
   const totals = {
     matchesPlayed: 0,
@@ -923,6 +925,9 @@ async function aggregateWidgetStats(
   let highestRank: { rank: string; score: number } | null = null;
   let fallbackHeroImageUrl: string | null = null;
 
+  // Use provided all snapshots for highest rank, or fall back to main snapshots
+  const snapshotsForHighestRank = allSnapshotsForHighestRank ?? snapshots;
+
   for (const snapshot of snapshots) {
     if (!playerName && snapshot.playerName) {
       playerName = snapshot.playerName;
@@ -948,7 +953,12 @@ async function aggregateWidgetStats(
           season: snapshot.seasonResponseNumber,
         };
       }
+    }
+  }
 
+  // Calculate highest rank from all seasons
+  for (const snapshot of snapshotsForHighestRank) {
+    if (snapshot.seasonResponseNumber !== null && isValidRank(snapshot.rank)) {
       const rankScore = rankToScore(snapshot.rank);
       if (rankScore >= 0) {
         if (!highestRank || rankScore > highestRank.score) {
@@ -998,6 +1008,10 @@ async function aggregateWidgetStats(
   let topHeroName: string | null = topHero?.name ?? null;
   let topHeroImageUrl: string | null =
     topHero?.imageUrl ?? fallbackHeroImageUrl;
+  const topHeroTimePlayedHours =
+    topHero && topHero.playTimeSeconds > 0
+      ? topHero.playTimeSeconds / 3600
+      : null;
 
   if (topHero?.heroId !== null) {
     const resolvedHero = await resolveHeroById({
@@ -1019,14 +1033,19 @@ async function aggregateWidgetStats(
     }
   }
 
-  const seasonRank = latestSeasonRank
-    ? `${latestSeasonRank.rank} (S${getDisplaySeasonLabel(latestSeasonRank.season)})`
-    : null;
+  const seasonRank = latestSeasonRank?.rank ?? null;
+  const seasonLabel = latestSeasonRank
+    ? `S${getDisplaySeasonLabel(latestSeasonRank.season)}`
+    : typeof requestedSeasonResponseNumber === "number"
+      ? `S${getDisplaySeasonLabel(requestedSeasonResponseNumber)}`
+      : null;
 
   return {
     playerName: playerName ?? fallbackPlayerUid,
     seasonRank,
+    seasonLabel,
     topHero: topHeroName,
+    topHeroTimePlayedHours,
     highestRank: highestRank?.rank ?? null,
     timePlayedHours:
       totals.timePlayedSeconds > 0 ? totals.timePlayedSeconds / 3600 : null,
@@ -1325,8 +1344,63 @@ export async function getMarvelRivalsWidgetStats({
       currentSnapshotFromCache: current.fromCache,
     });
 
+    // Gather all available snapshots for highest rank calculation
+    const allSnapshots: SeasonSnapshot[] = [currentSnapshot];
+    const currentResponseSeason = currentSnapshot.seasonResponseNumber;
+    if (currentResponseSeason !== null) {
+      const previousApiSeasons = getPreviousApiSeasons(currentResponseSeason);
+      const cooldownUntil = await getHistoricalCooldownUntil(playerUid);
+      const isInHistoricalCooldown = now < cooldownUntil;
+
+      for (const apiSeason of previousApiSeasons) {
+        const cachedHistorical = await getHistoricalSeasonSnapshot({
+          playerUid,
+          apiSeason,
+        });
+
+        if (cachedHistorical) {
+          allSnapshots.push(cachedHistorical);
+        } else if (!isInHistoricalCooldown) {
+          // Try to fetch missing historical seasons
+          try {
+            const seasonPayload = await fetchPlayerStatsPayload({
+              apiKey,
+              playerUid,
+              season: apiSeason,
+            });
+
+            const seasonSnapshot = parseSeasonSnapshot(
+              seasonPayload,
+              playerUid,
+            );
+            await setHistoricalSeasonSnapshot({
+              playerUid,
+              apiSeason,
+              snapshot: seasonSnapshot,
+            });
+            allSnapshots.push(seasonSnapshot);
+          } catch (error) {
+            if (error instanceof MarvelRivalsApiError && error.status === 429) {
+              await setHistoricalCooldownUntil({
+                playerUid,
+                cooldownUntil: Date.now() + HISTORICAL_BACKFILL_COOLDOWN_MS,
+              });
+              break;
+            }
+            // Silently continue on other errors
+          }
+        }
+      }
+    }
+
     return {
-      data: await aggregateWidgetStats([requested.snapshot], apiKey, playerUid),
+      data: await aggregateWidgetStats(
+        [requested.snapshot],
+        apiKey,
+        playerUid,
+        allSnapshots,
+        seasonResponseNumber,
+      ),
       fromCache: requested.fromCache,
       backfillProgress: {
         totalHistoricalSeasons: 0,

@@ -52,7 +52,9 @@ export type CurrentSeasonCacheEntry = {
 export type MarvelRivalsWidgetStats = {
   playerName: string;
   seasonRank: string | null;
+  seasonLabel: string | null;
   topHero: string | null;
+  topHeroTimePlayedHours: number | null;
   highestRank: string | null;
   timePlayedHours: number | null;
   matchesPlayed: number | null;

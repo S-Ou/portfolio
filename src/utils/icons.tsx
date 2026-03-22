@@ -205,6 +205,37 @@ export const MarvelDiscordIcon: React.FC<IconProps> = ({
   );
 };
 
+export const MarvelRivalsIcon: React.FC<IconProps> = ({
+  className = "",
+  size = 24,
+}) => {
+  const height = (size * 106) / 209;
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={height}
+      viewBox="0 0 209 106"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M93 59.5L188 106H100.5L45 45.5L116 47.5L20 0H108L164 61L93 59.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M190 86.5L208.5 15L155.5 34.5L185.5 30L175 73.5L148 70.5L190 86.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M60.5 36.5L18.5 20.5C12.3333 44 0 91.2 0 92C0 92.8 34.6667 79.3333 52 72.5L23 76L33.5 33.5L60.5 36.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
 export const DiscordPartnerIcon: React.FC<IconProps> = ({
   className = "",
   size = 24,

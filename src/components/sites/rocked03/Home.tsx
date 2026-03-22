@@ -11,6 +11,7 @@ import {
   DiscordServerWidget,
   GitHubContributionsWidget,
   LetterboxdDiaryWidget,
+  MarvelRivalsStatsWidget,
   SteamGamesWidget,
 } from "@/components/widgets";
 
@@ -40,6 +41,7 @@ function HomeBodyRocked03() {
         <SteamGamesWidget />
         <GitHubContributionsWidget usernames={["Rocked03"]} />
         <LetterboxdDiaryWidget />
+        <MarvelRivalsStatsWidget />
       </CardsContainer>
     </>
   );
