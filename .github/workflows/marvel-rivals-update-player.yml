@@ -1,0 +1,25 @@
+name: Marvel Rivals Player Update Queue Trigger
+
+on:
+  schedule:
+    - cron: "16 3,15 * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Trigger player update
+        run: node scripts/update-marvel-player.mjs
+        env:
+          MARVEL_RIVALS_API_KEY: ${{ secrets.MARVEL_RIVALS_API_KEY }}
+          MARVEL_RIVALS_UID: ${{ secrets.MARVEL_RIVALS_UID }}

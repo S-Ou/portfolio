@@ -10,11 +10,13 @@
     "build:sjou": "cross-env NEXT_PUBLIC_SITE=sjou next build --turbopack",
     "build:rocked03": "cross-env NEXT_PUBLIC_SITE=rocked03 next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "marvel:update-player": "node scripts/update-marvel-player.mjs"
   },
   "dependencies": {
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-toggle-group": "^1.1.11",
+    "@upstash/redis": "^1.37.0",
     "lucide-react": "1.0.0-rc.0",
     "next": "16.0.8",
     "react": "19.1.0",
