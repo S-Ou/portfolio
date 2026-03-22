@@ -16,8 +16,6 @@ import {
 } from "@/components/widgets";
 
 function HomeBodyRocked03() {
-  // const stats = await getPlayerStats("rocked03");
-
   return (
     <>
       <BodyTextBlock>
@@ -32,10 +30,6 @@ function HomeBodyRocked03() {
           luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
         </BodyText>
       </BodyTextBlock>
-      {/* <div>
-        <h2>Rivals Tracker Stats:</h2>
-        <pre>{JSON.stringify(stats, null, 2)}</pre>
-      </div> */}
       <CardsContainer>
         <DiscordServerWidget />
         <GitHubContributionsWidget usernames={["Rocked03"]} />

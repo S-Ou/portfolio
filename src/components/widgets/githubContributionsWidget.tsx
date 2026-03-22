@@ -159,7 +159,7 @@ const ErrorText = styled.p`
 `;
 
 function formatContributionCount(count: number): string {
-  return `${count.toLocaleString()} contributions in the last year`;
+  return `${count.toLocaleString()} contributions (past year)`;
 }
 
 function formatFollowerCount(count: number): string {
