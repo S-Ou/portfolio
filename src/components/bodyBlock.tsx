@@ -44,4 +44,7 @@ export const BodyTextHeader = styled.h1`
 export const BodyText = styled.p`
   font-size: 1.25rem;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 `;

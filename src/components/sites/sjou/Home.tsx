@@ -13,19 +13,34 @@ import {
 } from "@/components/widgets";
 import { CardsContainer } from "@/components/styles";
 
+const calculateYearsSince = (date: Date): number =>
+  Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
+
 function HomeBodySJOu() {
+  var myAge = calculateYearsSince(new Date(2003, 2, 16)); // Months index at 0?!?
+  var saxophoneYears = calculateYearsSince(new Date(2014, 1));
+
   return (
     <>
       <BodyTextBlock>
-        <BodyTextHeader>Hi, I'm Samuel.</BodyTextHeader>
+        <BodyTextHeader>Hi, I&apos;m Samuel.</BodyTextHeader>
         <BodyText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          tincidunt rutrum dolor, non pulvinar nunc facilisis non. Vivamus vitae
-          elit dui. Nullam efficitur fermentum nunc, id volutpat odio cursus
-          non. In hac habitasse platea dictumst. Vivamus euismod tellus tempor
-          nunc congue ultricies. Sed faucibus fermentum dolor, vel pulvinar nunc
-          fermentum non. Donec et laoreet augue, sit amet finibus tortor. Donec
-          luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
+          <p>
+            I'm a {myAge}-year-old software engineer from Auckland, New Zealand.
+          </p>
+          <p>
+            I currently develop back-end code at Vista Group. Outside of work,
+            you can still find me coding various hobby projects, which you can
+            check out in <u>Projects</u>.
+          </p>
+          <p>
+            I'm an avid musician, having played the saxophone for{" "}
+            {saxophoneYears} years with many different bands and orchestras.
+          </p>
+          <p>
+            I love movies and TV shows, and you can often catch me in the cinema
+            &ndash; I especially enjoy Marvel and other pop-culture franchises.
+          </p>
         </BodyText>
       </BodyTextBlock>
       <CardsContainer>

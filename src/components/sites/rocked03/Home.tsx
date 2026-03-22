@@ -21,13 +21,19 @@ function HomeBodyRocked03() {
       <BodyTextBlock>
         <BodyTextHeader>Hi, I&apos;m Rocked.</BodyTextHeader>
         <BodyText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          tincidunt rutrum dolor, non pulvinar nunc facilisis non. Vivamus vitae
-          elit dui. Nullam efficitur fermentum nunc, id volutpat odio cursus
-          non. In hac habitasse platea dictumst. Vivamus euismod tellus tempor
-          nunc congue ultricies. Sed faucibus fermentum dolor, vel pulvinar nunc
-          fermentum non. Donec et laoreet augue, sit amet finibus tortor. Donec
-          luctus pulvinar tortor, vitae aliquam felis sollicitudin nec.
+          <p>
+            I'm a professional software developer from Auckland, New Zealand.
+          </p>
+          <p>
+            I enjoy pop-culture movies, shows, comics, etc., and you can often
+            find me in online fandom spaces for Marvel and other franchises. I
+            also help manage the Marvel Discord server, and you can find many
+            Discord-related projects in <u>Projects</u>.
+          </p>
+          <p>
+            I'm also a casual but avid saxophonist! I'll also find any excuse to
+            have a gaming sesh with friends.
+          </p>
         </BodyText>
       </BodyTextBlock>
       <CardsContainer>
