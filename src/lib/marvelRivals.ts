@@ -611,7 +611,11 @@ function getApiSeasonFromResponseSeason(
 function getPreviousApiSeasons(currentSeasonResponseNumber: number): number[] {
   const apiSeasons = new Set<number>();
 
-  for (let responseSeason = 0; responseSeason < currentSeasonResponseNumber; responseSeason += 1) {
+  for (
+    let responseSeason = 0;
+    responseSeason < currentSeasonResponseNumber;
+    responseSeason += 1
+  ) {
     const apiSeason = getApiSeasonFromResponseSeason(responseSeason);
     if (apiSeason !== null) {
       apiSeasons.add(apiSeason);
@@ -1174,7 +1178,8 @@ async function getSnapshotForRequestedSeason({
     };
   }
 
-  const requestedApiSeason = getApiSeasonFromResponseSeason(seasonResponseNumber);
+  const requestedApiSeason =
+    getApiSeasonFromResponseSeason(seasonResponseNumber);
   if (requestedApiSeason === null) {
     throw new Error(
       "Invalid season number. Use a non-negative integer API response season.",

@@ -71,7 +71,10 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Error fetching Marvel Rivals stats:", error);
 
-    if (error instanceof Error && /Invalid season query parameter/i.test(error.message)) {
+    if (
+      error instanceof Error &&
+      /Invalid season query parameter/i.test(error.message)
+    ) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
