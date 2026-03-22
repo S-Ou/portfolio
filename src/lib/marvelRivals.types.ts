@@ -31,6 +31,12 @@ export type HeroCatalogEntry = {
   }>;
 };
 
+export type MarvelRivalsHero = {
+  name: string;
+  timePlayedHours: number;
+  imageUrl: string | null;
+};
+
 export type SeasonSnapshot = {
   playerName: string;
   seasonResponseNumber: number | null;
@@ -53,15 +59,13 @@ export type MarvelRivalsWidgetStats = {
   playerName: string;
   seasonRank: string | null;
   seasonLabel: string | null;
-  topHero: string | null;
-  topHeroTimePlayedHours: number | null;
+  heroes: MarvelRivalsHero[];
   highestRank: string | null;
   timePlayedHours: number | null;
   matchesPlayed: number | null;
   wins: number | null;
   kos: number | null;
   assists: number | null;
-  topHeroImageUrl: string | null;
   heroImageUrl: string | null;
   fetchedAt: string;
 };

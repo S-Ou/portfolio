@@ -6,6 +6,7 @@ import type {
   JsonObject,
   JsonValue,
   MarvelRivalsBackfillProgress,
+  MarvelRivalsHero,
   MarvelRivalsSeasonInfo,
   MarvelRivalsWidgetStats,
   SeasonSnapshot,
@@ -18,6 +19,7 @@ export type {
   JsonObject,
   JsonValue,
   MarvelRivalsBackfillProgress,
+  MarvelRivalsHero,
   MarvelRivalsSeasonInfo,
   MarvelRivalsWidgetStats,
   SeasonSnapshot,
@@ -969,7 +971,10 @@ async function aggregateWidgetStats(
         }
       }
     }
+  }
 
+  // Aggregate heroes only from the requested snapshots (not all historical)
+  for (const snapshot of snapshots) {
     for (const hero of snapshot.heroes) {
       const heroKey =
         hero.heroId !== null
@@ -1005,13 +1010,7 @@ async function aggregateWidgetStats(
     return b.playTimeSeconds - a.playTimeSeconds;
   })[0];
 
-  let topHeroName: string | null = topHero?.name ?? null;
-  let topHeroImageUrl: string | null =
-    topHero?.imageUrl ?? fallbackHeroImageUrl;
-  const topHeroTimePlayedHours =
-    topHero && topHero.playTimeSeconds > 0
-      ? topHero.playTimeSeconds / 3600
-      : null;
+  let heroImageUrl: string | null = topHero?.imageUrl ?? fallbackHeroImageUrl;
 
   if (topHero?.heroId !== null) {
     const resolvedHero = await resolveHeroById({
@@ -1022,15 +1021,67 @@ async function aggregateWidgetStats(
     if (resolvedHero) {
       const primaryTransformation = resolvedHero.transformations[0] ?? null;
 
-      topHeroName =
-        primaryTransformation?.name ?? resolvedHero.name ?? topHeroName;
-
       if (primaryTransformation?.icon) {
-        topHeroImageUrl = primaryTransformation.icon;
+        heroImageUrl = primaryTransformation.icon;
       } else if (resolvedHero.imageUrl) {
-        topHeroImageUrl = resolvedHero.imageUrl;
+        heroImageUrl = resolvedHero.imageUrl;
       }
     }
+  }
+
+  // Build sorted heroes list by time played (descending)
+  const heroesData: Array<{
+    name: string;
+    timePlayedHours: number;
+    imageUrl: string | null;
+    heroId: number | null;
+  }> = [];
+
+  for (const hero of Array.from(heroTotals.values())) {
+    if (hero.playTimeSeconds > 0) {
+      heroesData.push({
+        name: hero.name,
+        timePlayedHours: hero.playTimeSeconds / 3600,
+        imageUrl: hero.imageUrl,
+        heroId: hero.heroId,
+      });
+    }
+  }
+
+  // Sort by time played descending
+  heroesData.sort((a, b) => b.timePlayedHours - a.timePlayedHours);
+
+  // Enrich with hero catalog names
+  const enrichedHeroes: typeof heroesData = [];
+  for (const heroData of heroesData) {
+    let finalName = heroData.name;
+    let finalImageUrl = heroData.imageUrl;
+
+    if (heroData.heroId !== null) {
+      const resolvedHero = await resolveHeroById({
+        apiKey,
+        heroId: heroData.heroId,
+      });
+
+      if (resolvedHero) {
+        const primaryTransformation = resolvedHero.transformations[0] ?? null;
+        finalName =
+          primaryTransformation?.name ?? resolvedHero.name ?? finalName;
+
+        if (primaryTransformation?.icon) {
+          finalImageUrl = primaryTransformation.icon;
+        } else if (resolvedHero.imageUrl) {
+          finalImageUrl = resolvedHero.imageUrl;
+        }
+      }
+    }
+
+    enrichedHeroes.push({
+      name: finalName,
+      timePlayedHours: heroData.timePlayedHours,
+      imageUrl: finalImageUrl,
+      heroId: heroData.heroId,
+    });
   }
 
   const seasonRank = latestSeasonRank?.rank ?? null;
@@ -1044,8 +1095,11 @@ async function aggregateWidgetStats(
     playerName: playerName ?? fallbackPlayerUid,
     seasonRank,
     seasonLabel,
-    topHero: topHeroName,
-    topHeroTimePlayedHours,
+    heroes: enrichedHeroes.map((h) => ({
+      name: h.name,
+      timePlayedHours: h.timePlayedHours,
+      imageUrl: h.imageUrl,
+    })),
     highestRank: highestRank?.rank ?? null,
     timePlayedHours:
       totals.timePlayedSeconds > 0 ? totals.timePlayedSeconds / 3600 : null,
@@ -1053,8 +1107,7 @@ async function aggregateWidgetStats(
     wins: totals.wins > 0 ? totals.wins : 0,
     kos: totals.kos > 0 ? totals.kos : 0,
     assists: totals.assists > 0 ? totals.assists : 0,
-    topHeroImageUrl,
-    heroImageUrl: topHeroImageUrl,
+    heroImageUrl,
     fetchedAt: new Date().toISOString(),
   };
 }

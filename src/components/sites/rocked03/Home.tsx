@@ -38,8 +38,8 @@ function HomeBodyRocked03() {
       </div> */}
       <CardsContainer>
         <DiscordServerWidget />
-        <SteamGamesWidget />
         <GitHubContributionsWidget usernames={["Rocked03"]} />
+        <SteamGamesWidget />
         <LetterboxdDiaryWidget />
         <MarvelRivalsStatsWidget />
       </CardsContainer>

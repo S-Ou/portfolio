@@ -12,15 +12,17 @@ type MarvelRivalsStats = {
   playerName: string;
   seasonRank: string | null;
   seasonLabel: string | null;
-  topHero: string | null;
-  topHeroTimePlayedHours: number | null;
+  heroes: Array<{
+    name: string;
+    timePlayedHours: number;
+    imageUrl: string | null;
+  }>;
   highestRank: string | null;
   timePlayedHours: number | null;
   matchesPlayed: number | null;
   wins: number | null;
   kos: number | null;
   assists: number | null;
-  topHeroImageUrl: string | null;
   heroImageUrl?: string | null;
   backfillProgress?: {
     totalHistoricalSeasons: number;
@@ -84,6 +86,10 @@ const SeasonSelectTrigger = styled(Select.Trigger)`
 
   &:focus-visible {
     outline: 0.08rem solid rgba(var(--text-color-rgb), 0.2);
+  }
+
+  @media (max-width: 768px) {
+    min-width: auto;
   }
 `;
 
@@ -219,12 +225,14 @@ const ErrorText = styled.p`
   opacity: 0.8;
 `;
 
-const PlayerImageSkeleton = styled(Skeleton)`
+const ImageSkeleton = styled(Skeleton)`
   display: block;
   width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
 
   &:empty {
-    min-height: 11rem;
+    height: auto;
   }
 `;
 
@@ -233,7 +241,7 @@ const StatValueSkeleton = styled(Skeleton)`
   width: 70%;
 
   &:empty {
-    height: 1.8rem;
+    height: 1.1rem;
   }
 `;
 
@@ -243,6 +251,65 @@ const StatLabelSkeleton = styled(Skeleton)`
 
   &:empty {
     height: 0.9rem;
+  }
+`;
+
+const PlayerNameSkeleton = styled(Skeleton)`
+  display: block;
+  width: min(14rem, 85%);
+
+  &:empty {
+    height: 1.6rem;
+  }
+`;
+
+const PlayerLineSkeleton = styled(Skeleton)`
+  display: block;
+  width: min(16rem, 95%);
+
+  &:empty {
+    height: 1rem;
+  }
+`;
+
+const TopHeroesGrid = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    & > *:nth-child(n + 5) {
+      display: none;
+    }
+  }
+`;
+
+const TopHeroItem = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const TopHeroImage = styled.img`
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: rgba(var(--text-color-rgb), 0.1);
+  border-radius: 0.6rem;
+`;
+
+const TopHeroImageSkeleton = styled(Skeleton)`
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.6rem;
+
+  &:empty {
+    height: auto;
   }
 `;
 
@@ -262,7 +329,7 @@ function formatHours(value: number | null): string {
     return "N/A";
   }
 
-  return `${Math.round(value).toLocaleString()} Hours`;
+  return `${value.toFixed(1).toLocaleString()} hrs`;
 }
 
 function getBackfillText(data: MarvelRivalsStats): string | null {
@@ -436,7 +503,13 @@ export default function MarvelRivalsStatsWidget() {
         }
       } finally {
         if (isMounted && initialLoad) {
-          setIsLoading(false);
+          // debugging-- wait 0.5 a second before hiding loading state to better see it during refreshes
+
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+
+          // setIsLoading(false);
         }
       }
     }
@@ -450,14 +523,61 @@ export default function MarvelRivalsStatsWidget() {
   }, [isSeasonsLoaded, selectedSeason]);
 
   const displayHeroImageUrl =
-    data?.topHeroImageUrl ?? data?.heroImageUrl ?? null;
+    data?.heroes?.[0]?.imageUrl ?? data?.heroImageUrl ?? null;
+  const topHeroName = data?.heroes?.[0]?.name ?? null;
+  const topHeroTimePlayedHours = data?.heroes?.[0]?.timePlayedHours ?? null;
 
   return (
     <WidgetCard>
+      <HeaderContents>
+        <Header>
+          <MarvelRivalsIcon size={20} /> Marvel Rivals
+        </Header>
+        <Select.Root
+          value={selectedSeason}
+          onValueChange={setSelectedSeason}
+          disabled={!isSeasonsLoaded}
+        >
+          <SeasonSelectTrigger aria-label="Season">
+            <Select.Value placeholder="All seasons" />
+            <Select.Icon>
+              <ChevronDown size={14} />
+            </Select.Icon>
+          </SeasonSelectTrigger>
+          <Select.Portal>
+            <SeasonSelectContent sideOffset={6}>
+              <SeasonSelectViewport>
+                <SeasonSelectItem value="all">
+                  <Select.ItemText>All seasons</Select.ItemText>
+                </SeasonSelectItem>
+                {seasons.map((season) => (
+                  <SeasonSelectItem
+                    key={season.responseSeason}
+                    value={`${season.responseSeason}`}
+                  >
+                    <Select.ItemText>
+                      {`Season ${season.label}${season.isCurrent ? " (Live)" : ""}`}
+                    </Select.ItemText>
+                  </SeasonSelectItem>
+                ))}
+              </SeasonSelectViewport>
+            </SeasonSelectContent>
+          </Select.Portal>
+        </Select.Root>
+      </HeaderContents>
+
       {isLoading && (
         <>
           <PlayerPanel>
-            <PlayerImageSkeleton />
+            <PlayerMeta>
+              <PlayerNameSkeleton />
+              <PlayerLineSkeleton />
+              <PlayerLineSkeleton />
+            </PlayerMeta>
+            <PlayerImageWrapper>
+              <ImageSkeleton />
+              <StatLabelSkeleton />
+            </PlayerImageWrapper>
           </PlayerPanel>
           <StatsGrid>
             {Array.from({ length: 6 }, (_, index) => (
@@ -467,6 +587,14 @@ export default function MarvelRivalsStatsWidget() {
               </Stat>
             ))}
           </StatsGrid>
+          <TopHeroesGrid>
+            {Array.from({ length: 5 }, (_, index) => (
+              <TopHeroItem key={`rivals-top-hero-skeleton-${index}`}>
+                <TopHeroImageSkeleton />
+                <StatLabelSkeleton />
+              </TopHeroItem>
+            ))}
+          </TopHeroesGrid>
         </>
       )}
 
@@ -474,58 +602,23 @@ export default function MarvelRivalsStatsWidget() {
 
       {!isLoading && !error && data && (
         <>
-          <HeaderContents>
-            <Header>
-              <MarvelRivalsIcon size={20} /> Marvel Rivals
-            </Header>
-            <Select.Root
-              value={selectedSeason}
-              onValueChange={setSelectedSeason}
-            >
-              <SeasonSelectTrigger aria-label="Season">
-                <Select.Value placeholder="All seasons" />
-                <Select.Icon>
-                  <ChevronDown size={14} />
-                </Select.Icon>
-              </SeasonSelectTrigger>
-              <Select.Portal>
-                <SeasonSelectContent sideOffset={6}>
-                  <SeasonSelectViewport>
-                    <SeasonSelectItem value="all">
-                      <Select.ItemText>All seasons</Select.ItemText>
-                    </SeasonSelectItem>
-                    {seasons.map((season) => (
-                      <SeasonSelectItem
-                        key={season.responseSeason}
-                        value={`${season.responseSeason}`}
-                      >
-                        <Select.ItemText>
-                          {`Season ${season.label}${season.isCurrent ? " (Current)" : ""}`}
-                        </Select.ItemText>
-                      </SeasonSelectItem>
-                    ))}
-                  </SeasonSelectViewport>
-                </SeasonSelectContent>
-              </Select.Portal>
-            </Select.Root>
-          </HeaderContents>
           <PlayerPanel>
             <PlayerMeta>
               <PlayerName>{data.playerName}</PlayerName>
               <PlayerLine>
                 {data.seasonLabel ?? "N/A"}: {data.seasonRank ?? "Unranked"}
               </PlayerLine>
-              <PlayerLine>Top Hero: {data.topHero ?? "N/A"}</PlayerLine>
+              <PlayerLine>Top Hero: {topHeroName ?? "N/A"}</PlayerLine>
             </PlayerMeta>
             {displayHeroImageUrl && (
               <PlayerImageWrapper>
                 <PlayerImage
                   src={displayHeroImageUrl}
-                  alt={`${data.topHero ?? "Top hero"} artwork`}
+                  alt={`${topHeroName ?? "Top hero"} artwork`}
                 />
                 <StatLabel>
-                  {data.topHeroTimePlayedHours
-                    ? `${data.topHeroTimePlayedHours.toFixed(1)} hours played`
+                  {topHeroTimePlayedHours
+                    ? `${topHeroTimePlayedHours.toFixed(1)} hours played`
                     : "N/A"}
                 </StatLabel>
               </PlayerImageWrapper>
@@ -572,6 +665,19 @@ export default function MarvelRivalsStatsWidget() {
               <StatLabel>Assists</StatLabel>
             </Stat>
           </StatsGrid>
+
+          <TopHeroesGrid>
+            {data.heroes.slice(1, 6).map((hero, index) => (
+              <TopHeroItem key={index}>
+                {hero.imageUrl ? (
+                  <TopHeroImage src={hero.imageUrl} alt={hero.name} />
+                ) : (
+                  <TopHeroImage as="div" />
+                )}
+                <StatLabel>{formatHours(hero.timePlayedHours)}</StatLabel>
+              </TopHeroItem>
+            ))}
+          </TopHeroesGrid>
         </>
       )}
     </WidgetCard>
