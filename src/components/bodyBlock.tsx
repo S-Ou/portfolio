@@ -30,7 +30,7 @@ export const BodyTextBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 5rem 0rem;
+  padding: 4rem 0rem;
 
   @media (max-width: 768px) {
     padding: 2rem 0rem;
