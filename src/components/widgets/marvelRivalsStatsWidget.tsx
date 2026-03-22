@@ -503,13 +503,7 @@ export default function MarvelRivalsStatsWidget() {
         }
       } finally {
         if (isMounted && initialLoad) {
-          // debugging-- wait 0.5 a second before hiding loading state to better see it during refreshes
-
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500);
-
-          // setIsLoading(false);
+          setIsLoading(false);
         }
       }
     }
