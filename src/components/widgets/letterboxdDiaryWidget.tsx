@@ -86,9 +86,13 @@ function formatWatchDate(dateValue: string): string {
     return "-- ---";
   }
 
+  var isMoreThanOneYearAgo =
+    Date.now() - date.getTime() > 365 * 24 * 60 * 60 * 1000;
+
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
+    year: isMoreThanOneYearAgo ? "2-digit" : undefined,
     timeZone: "UTC",
   }).format(date);
 }

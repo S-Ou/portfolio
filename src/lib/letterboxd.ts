@@ -144,6 +144,12 @@ function parseDiaryFilms(rssXml: string): LetterboxdDiaryFilm[] {
     });
   }
 
+  films.sort((a, b) => {
+    const dateA = new Date(a.watchedDate).getTime();
+    const dateB = new Date(b.watchedDate).getTime();
+    return dateB - dateA;
+  });
+
   return films;
 }
 
