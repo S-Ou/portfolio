@@ -272,7 +272,7 @@ export const LeagueOfComicGeeksIcon: React.FC<IconProps> = ({
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={height}
-      viewBox="-25.375 -29 253.75 290"
+      viewBox="-25.375 -15 253.75 304"
       fill="none"
       className={className}
     >
