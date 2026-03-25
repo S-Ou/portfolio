@@ -209,7 +209,9 @@ export default function SteamGamesWidget() {
           </GamesList>
           <ChipContainer>
             <Skeleton>
-              <Chip>Rocked03 on Steam</Chip>
+              <Chip>
+                <ExternalLink size={12} /> Rocked03 on Steam
+              </Chip>
             </Skeleton>
           </ChipContainer>
         </>

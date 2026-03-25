@@ -164,7 +164,10 @@ export default function LetterboxdDiaryWidget() {
           </FilmsRow>
           <ChipContainer>
             <Skeleton>
-              <Chip>Rocked03 on Letterboxd</Chip>
+              <Chip>
+                <ExternalLink size={12} />
+                Rocked03 on Letterboxd
+              </Chip>
             </Skeleton>
           </ChipContainer>
         </>

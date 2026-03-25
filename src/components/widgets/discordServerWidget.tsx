@@ -111,7 +111,7 @@ const ServerDescriptionSkeleton = styled(Skeleton)`
   width: 92%;
 
   &:empty {
-    height: 1rem;
+    height: 3.75rem;
   }
 `;
 
@@ -195,7 +195,10 @@ export default function DiscordServerWidget() {
               <Chip>100,000 members</Chip>
             </Skeleton>
             <Skeleton>
-              <Chip>discord.gg/marvel</Chip>
+              <Chip>
+                <ExternalLink size={12} />
+                discord.gg/marvel
+              </Chip>
             </Skeleton>
           </ChipContainer>
         </>

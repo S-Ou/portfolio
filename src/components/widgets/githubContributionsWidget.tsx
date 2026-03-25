@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Skeleton } from "@/components/skeleton";
-import { LinkChip, WidgetCard } from "./styles";
+import { Chip, LinkChip, WidgetCard } from "./styles";
 import { GitHubIcon } from "@/utils/icons";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLink, ExternalLinkIcon } from "lucide-react";
 
 type GitHubContributionAccount = {
   username: string;
@@ -36,31 +36,6 @@ const Header = styled.p`
   font-weight: 600;
 `;
 
-const HeaderSkeleton = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 0.5rem;
-`;
-
-const HeaderIconSkeleton = styled(Skeleton)`
-  border-radius: 999px;
-  display: block;
-  width: 1.25rem;
-
-  &:empty {
-    height: 1.25rem;
-  }
-`;
-
-const HeaderTextSkeleton = styled(Skeleton)`
-  display: block;
-  width: 4rem;
-
-  &:empty {
-    height: 1rem;
-  }
-`;
-
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
@@ -79,6 +54,7 @@ const RowIdentity = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  width: fit-content;
 `;
 
 const RowLabel = styled.span`
@@ -112,35 +88,12 @@ const RowSkeleton = styled.div`
   grid-template-columns: minmax(0, 1fr) auto;
 `;
 
-const RowIdentitySkeleton = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-`;
-
-const RowStatsSkeleton = styled.div`
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-`;
-
 const UsernameSkeleton = styled(Skeleton)`
   display: block;
   width: 7rem;
 
   &:empty {
     height: 0.95rem;
-  }
-`;
-
-const ProfileChipSkeleton = styled(Skeleton)`
-  border-radius: 999px;
-  display: block;
-  width: 8.75rem;
-
-  &:empty {
-    height: 1.45rem;
   }
 `;
 
@@ -233,24 +186,28 @@ export default function GitHubContributionsWidget({
 
   return (
     <WidgetCard>
+      <Header>
+        <GitHubIcon size={20} /> GitHub
+      </Header>
       {isLoading && (
         <>
-          <HeaderSkeleton>
-            <HeaderIconSkeleton />
-            <HeaderTextSkeleton />
-          </HeaderSkeleton>
           <Rows>
             {Array.from({ length: usernames.length }, (_, index) => (
               <RowSkeleton key={`github-skeleton-${index}`}>
-                <RowIdentitySkeleton>
+                <RowIdentity>
                   <UsernameSkeleton />
-                  <ProfileChipSkeleton />
-                </RowIdentitySkeleton>
-                <RowStatsSkeleton>
-                  <StatCountSkeleton $width="13rem" />
+                  <Skeleton>
+                    <Chip>
+                      <ExternalLink size={12} />
+                      @Rocked03
+                    </Chip>
+                  </Skeleton>
+                </RowIdentity>
+                <RowStats>
+                  <StatCountSkeleton $width="12rem" />
                   <StatCountSkeleton $width="5.5rem" />
                   <StatCountSkeleton $width="4.5rem" />
-                </RowStatsSkeleton>
+                </RowStats>
               </RowSkeleton>
             ))}
           </Rows>
@@ -261,9 +218,6 @@ export default function GitHubContributionsWidget({
 
       {!isLoading && !error && (
         <>
-          <Header>
-            <GitHubIcon size={20} /> GitHub
-          </Header>
           <Rows>
             {accounts.map((account) => (
               <Row key={account.username}>
