@@ -47,4 +47,16 @@ export const BodyText = styled.div`
   font-size: 1.25rem;
   gap: 1.25rem;
   line-height: 1.5;
+
+  * > a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.12em;
+    text-decoration-color: rgba(var(--text-color-rgb), 0.35);
+    transition: text-decoration-color 180ms ease;
+
+    &:hover {
+      text-decoration-color: rgba(var(--text-color-rgb), 0.85);
+    }
+  }
 `;

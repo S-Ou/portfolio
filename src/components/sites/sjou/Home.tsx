@@ -12,6 +12,7 @@ import {
   SkillsWidget,
 } from "@/components/widgets";
 import { CardsContainer } from "@/components/styles";
+import Link from "next/link";
 
 const calculateYearsSince = (date: Date): number =>
   Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
@@ -31,7 +32,7 @@ function HomeBodySJOu() {
           <p>
             I currently develop back-end code at Vista Group. Outside of work,
             you can still find me coding various hobby projects, which you can
-            check out in <u>Projects</u>.
+            check out in <Link href="/projects">Projects</Link>.
           </p>
           <p>
             I'm an avid musician, having played the saxophone for{" "}

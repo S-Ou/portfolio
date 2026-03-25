@@ -14,6 +14,7 @@ import {
   MarvelRivalsStatsWidget,
   SteamGamesWidget,
 } from "@/components/widgets";
+import Link from "next/link";
 
 function HomeBodyRocked03() {
   return (
@@ -28,7 +29,7 @@ function HomeBodyRocked03() {
             I enjoy pop-culture movies, shows, comics, etc., and you can often
             find me in online fandom spaces for Marvel and other franchises. I
             also help manage the Marvel Discord server, and you can find many
-            Discord-related projects in <u>Projects</u>.
+            Discord-related projects in <Link href="/projects">Projects</Link>.
           </p>
           <p>
             I'm also a casual but avid saxophonist! I'll also find any excuse to
