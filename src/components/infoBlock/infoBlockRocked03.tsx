@@ -1,6 +1,7 @@
 import { Clock, Code, Mail, MapPin } from "lucide-react";
 import {
   GitHubIcon,
+  LeagueOfComicGeeksIcon,
   LetterboxdIcon,
   MarvelDiscordIcon,
   SteamIcon,
@@ -83,6 +84,9 @@ function LinkButtons() {
       </LinkButton>
       <LinkButton href="https://letterboxd.com/rocked03/">
         <LetterboxdIcon size={24} />
+      </LinkButton>
+      <LinkButton href="https://leagueofcomicgeeks.com/profile/rocked03/stats/reading">
+        <LeagueOfComicGeeksIcon size={24} />
       </LinkButton>
       <LinkButton href="mailto:me@rocked03.dev">
         <Mail size={24} />

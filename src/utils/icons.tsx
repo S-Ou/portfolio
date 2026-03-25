@@ -260,3 +260,41 @@ export const DiscordPartnerIcon: React.FC<IconProps> = ({
     </svg>
   );
 };
+
+export const LeagueOfComicGeeksIcon: React.FC<IconProps> = ({
+  className = "",
+  size = 24,
+}) => {
+  const height = (size * 232) / 203;
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={height}
+      viewBox="-25.375 -29 253.75 290"
+      fill="none"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7 104.5V178.5L100.005 231.434V153.476L7 104.5ZM30.5 144.5V128L72 150.5V166.5L30.5 144.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M195.5 178.5V99L102 153.418V231.434L195.5 178.5Z"
+        fill="currentColor"
+      />
+      <path
+        d="M101.903 143.973L203 85V60L101.903 119.5V143.973Z"
+        fill="currentColor"
+      />
+      <path d="M0 91L100.005 143.973V119.5L0 60V91Z" fill="currentColor" />
+      <path
+        d="M101 0L0.5 58.2104L101 118L202.5 58.2132L101 0Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
