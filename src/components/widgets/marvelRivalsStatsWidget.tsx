@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDown } from "lucide-react";
@@ -373,6 +373,23 @@ function getNextBackfillText(data: MarvelRivalsStats): string | null {
   return ` - Retrying in ${seconds}s`;
 }
 
+function getUpdateToastMessage(payload: unknown): string | null {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return null;
+  }
+
+  const candidate = payload as { message?: unknown; error?: unknown };
+  if (typeof candidate.message === "string" && candidate.message.trim()) {
+    return candidate.message;
+  }
+
+  if (typeof candidate.error === "string" && candidate.error.trim()) {
+    return candidate.error;
+  }
+
+  return null;
+}
+
 export default function MarvelRivalsStatsWidget() {
   const [data, setData] = useState<MarvelRivalsStats | null>(null);
   const [seasons, setSeasons] = useState<MarvelRivalsSeason[]>([]);
@@ -380,7 +397,10 @@ export default function MarvelRivalsStatsWidget() {
   const [isSeasonsLoaded, setIsSeasonsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdatingStats, setIsUpdatingStats] = useState(false);
+  const [statsReloadNonce, setStatsReloadNonce] = useState(0);
   const latestDataRef = useRef<MarvelRivalsStats | null>(null);
+  const isMountedRef = useRef(true);
 
   // Easter egg state
   const [isIconHeld, setIsIconHeld] = useState(false);
@@ -395,53 +415,50 @@ export default function MarvelRivalsStatsWidget() {
   const animationStartRef = useRef<number | null>(null);
   const iconWrapperRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
+  const fetchSeasons = useCallback(async () => {
+    try {
+      const response = await fetch("/api/marvel-rivals/seasons");
+      const payload = (await response.json()) as
+        | MarvelRivalsSeasonsResponse
+        | MarvelRivalsApiError;
 
-    async function fetchSeasons() {
-      try {
-        const response = await fetch("/api/marvel-rivals/seasons");
-        const payload = (await response.json()) as
-          | MarvelRivalsSeasonsResponse
-          | MarvelRivalsApiError;
-
-        if (!response.ok) {
-          throw new Error(
-            "error" in payload
-              ? payload.error
-              : "Failed to load Marvel Rivals seasons.",
-          );
-        }
-
-        if (!isMounted) {
-          return;
-        }
-
-        const list = (payload as MarvelRivalsSeasonsResponse).seasons;
-        setSeasons(
-          [...list].sort((a, b) => b.responseSeason - a.responseSeason),
+      if (!response.ok) {
+        throw new Error(
+          "error" in payload
+            ? payload.error
+            : "Failed to load Marvel Rivals seasons.",
         );
-      } catch (fetchError) {
-        if (!isMounted) {
-          return;
-        }
+      }
 
-        const message =
-          fetchError instanceof Error
-            ? fetchError.message
-            : "Failed to load Marvel Rivals seasons.";
-        setError(message);
-      } finally {
-        if (isMounted) {
-          setIsSeasonsLoaded(true);
-        }
+      if (!isMountedRef.current) {
+        return;
+      }
+
+      const list = (payload as MarvelRivalsSeasonsResponse).seasons;
+      setSeasons([...list].sort((a, b) => b.responseSeason - a.responseSeason));
+    } catch (fetchError) {
+      if (!isMountedRef.current) {
+        return;
+      }
+
+      const message =
+        fetchError instanceof Error
+          ? fetchError.message
+          : "Failed to load Marvel Rivals seasons.";
+      setError(message);
+    } finally {
+      if (isMountedRef.current) {
+        setIsSeasonsLoaded(true);
       }
     }
+  }, []);
 
+  useEffect(() => {
+    isMountedRef.current = true;
     void fetchSeasons();
 
     return () => {
-      isMounted = false;
+      isMountedRef.current = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -449,7 +466,7 @@ export default function MarvelRivalsStatsWidget() {
         clearTimeout(holdTimerRef.current);
       }
     };
-  }, []);
+  }, [fetchSeasons]);
 
   // Easter egg handlers
   const handleIconMouseDown = () => {
@@ -469,7 +486,7 @@ export default function MarvelRivalsStatsWidget() {
           // Animation done, trigger thwump
           setIsIconHeld(false);
           setIsSnapping(true);
-          triggerStatsUpdate();
+          void triggerStatsUpdate();
 
           setTimeout(() => {
             setIsSnapping(false);
@@ -520,8 +537,67 @@ export default function MarvelRivalsStatsWidget() {
     animationStartRef.current = null;
   };
 
-  const triggerStatsUpdate = () => {
-    toast.info("Requesting stats update...");
+  const triggerStatsUpdate = async () => {
+    if (isUpdatingStats) {
+      toast.info("Stats update already in progress...");
+      return;
+    }
+
+    setIsUpdatingStats(true);
+    const toastId = toast.loading(
+      "Requesting Marvel Rivals API stats update...",
+    );
+
+    try {
+      const response = await fetch("/api/marvel-rivals/stats/update", {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      const payload: unknown = await response.json().catch(() => null);
+      const message = getUpdateToastMessage(payload);
+      const refreshNote = response.headers.get("x-marvel-rivals-refresh-note");
+
+      switch (response.status) {
+        case 200:
+          toast.success(
+            "Marvel Rivals API: " +
+              (message ?? "Players data will be updated - 0-30m"),
+            {
+              id: toastId,
+            },
+          );
+          break;
+        case 429:
+          toast.warning(
+            "Marvel Rivals API: " +
+              (message ?? "You can request an update in 30 minutes."),
+            {
+              id: toastId,
+            },
+          );
+          break;
+        default:
+          toast.error(
+            "Marvel Rivals API: " +
+              (message ?? "Failed to request stats update."),
+            {
+              id: toastId,
+            },
+          );
+      }
+
+      if (refreshNote) {
+        toast.info(`Marvel Rivals stats have been re-fetched.`);
+        setStatsReloadNonce((current) => current + 1);
+      }
+    } catch {
+      toast.error("Marvel Rivals API: Failed to request stats update.", {
+        id: toastId,
+      });
+    } finally {
+      setIsUpdatingStats(false);
+    }
   };
 
   useEffect(() => {
@@ -625,7 +701,7 @@ export default function MarvelRivalsStatsWidget() {
       isMounted = false;
       clearRefreshTimer();
     };
-  }, [isSeasonsLoaded, selectedSeason]);
+  }, [isSeasonsLoaded, selectedSeason, statsReloadNonce]);
 
   const displayHeroImageUrl =
     data?.heroes?.[0]?.imageUrl ?? data?.heroImageUrl ?? null;

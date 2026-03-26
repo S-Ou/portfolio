@@ -9,6 +9,7 @@ export function ThemeSyncedToaster() {
   return (
     <Toaster
       theme={effectiveTheme}
+      expand={true}
       toastOptions={{
         style: {
           background: "var(--foreground)",

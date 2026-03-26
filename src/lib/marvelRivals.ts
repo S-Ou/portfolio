@@ -1,4 +1,9 @@
-import { buildCacheKey, getJsonValue, setJsonValue } from "@/lib/redisCache";
+import {
+  buildCacheKey,
+  deleteValue,
+  getJsonValue,
+  setJsonValue,
+} from "@/lib/redisCache";
 import type {
   CurrentSeasonCacheEntry,
   HeroAggregate,
@@ -108,6 +113,25 @@ function getCooldownRedisKey(playerUid: string): string {
 
 function getHeroRedisKey(heroId: number): string {
   return buildCacheKey(`hero:${heroId}`);
+}
+
+export async function invalidateMarvelRivalsStatsCache(
+  playerUid: string,
+): Promise<void> {
+  const normalizedPlayerUid = playerUid.toLowerCase();
+
+  currentSeasonCache.delete(normalizedPlayerUid);
+  historicalBackfillCooldownByPlayer.delete(normalizedPlayerUid);
+
+  for (const key of historicalSeasonCache.keys()) {
+    if (key.startsWith(`${normalizedPlayerUid}:`)) {
+      historicalSeasonCache.delete(key);
+    }
+  }
+
+  await deleteValue(getCurrentSeasonRedisKey(playerUid));
+  await deleteValue(getCurrentSeasonLatestRedisKey(playerUid));
+  await deleteValue(getCooldownRedisKey(playerUid));
 }
 
 async function getCurrentSeasonCacheEntry(

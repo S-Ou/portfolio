@@ -77,3 +77,12 @@ export async function setJsonValue(
 
   await redis.set(key, value);
 }
+
+export async function deleteValue(key: string): Promise<void> {
+  const redis = getRedisClient();
+  if (!redis) {
+    return;
+  }
+
+  await redis.del(key);
+}
