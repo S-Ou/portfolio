@@ -4,6 +4,7 @@ import StyledComponentsRegistry from "@/lib/registry";
 import { ThemeProvider } from "@/lib/themeContext";
 import { getSite } from "@/lib/site";
 import { getMetadata } from "@/lib/metadata";
+import { ThemeSyncedToaster } from "@/components/themeSyncedToaster";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
@@ -34,7 +35,10 @@ export default function RootLayout({
       </head>
       <body>
         <StyledComponentsRegistry>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <ThemeSyncedToaster />
+            {children}
+          </ThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

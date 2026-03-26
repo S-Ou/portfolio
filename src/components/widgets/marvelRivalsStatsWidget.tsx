@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDown } from "lucide-react";
 import { Skeleton } from "@/components/skeleton";
 import { WidgetCard } from "./styles";
 import { MarvelRivalsIcon } from "@/utils/icons";
+import { toast } from "sonner";
 
 type MarvelRivalsStats = {
   playerName: string;
@@ -57,7 +58,7 @@ const HeaderContents = styled.div`
   width: 100%;
 `;
 
-const Header = styled.p`
+const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -313,6 +314,24 @@ const TopHeroImageSkeleton = styled(Skeleton)`
   }
 `;
 
+const snap = keyframes`
+  0% { transform: scale(1.15); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+`;
+
+const AnimatedIconWrapper = styled.div<{ $transform: string }>`
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+  transform: ${({ $transform }) => $transform};
+
+  &.snap {
+    animation: ${snap} 0.4s ease-out forwards;
+  }
+`;
+
 function formatCompact(value: number | null): string {
   if (value === null) {
     return "N/A";
@@ -363,6 +382,19 @@ export default function MarvelRivalsStatsWidget() {
   const [isLoading, setIsLoading] = useState(true);
   const latestDataRef = useRef<MarvelRivalsStats | null>(null);
 
+  // Easter egg state
+  const [isIconHeld, setIsIconHeld] = useState(false);
+  const [isSnapping, setIsSnapping] = useState(false);
+  const [iconTransform, setIconTransform] = useState(
+    "translate(0, 0) scale(1)",
+  );
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationFrameRef = useRef<ReturnType<
+    typeof requestAnimationFrame
+  > | null>(null);
+  const animationStartRef = useRef<number | null>(null);
+  const iconWrapperRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     let isMounted = true;
 
@@ -410,8 +442,87 @@ export default function MarvelRivalsStatsWidget() {
 
     return () => {
       isMounted = false;
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (holdTimerRef.current) {
+        clearTimeout(holdTimerRef.current);
+      }
     };
   }, []);
+
+  // Easter egg handlers
+  const handleIconMouseDown = () => {
+    holdTimerRef.current = setTimeout(() => {
+      console.log("Hold detected, starting animation...");
+      setIsIconHeld(true);
+      animationStartRef.current = performance.now();
+
+      // Start the animation loop
+      const animate = (currentTime: number) => {
+        if (!animationStartRef.current) return;
+
+        const elapsed = currentTime - animationStartRef.current;
+        const totalDuration = 4000; // 4 seconds
+
+        if (elapsed >= totalDuration) {
+          // Animation done, trigger thwump
+          setIsIconHeld(false);
+          setIsSnapping(true);
+          triggerStatsUpdate();
+
+          setTimeout(() => {
+            setIsSnapping(false);
+            setIconTransform("translate(0, 0) scale(1)");
+            animationStartRef.current = null;
+          }, 400);
+          return;
+        }
+
+        // 0-4s: vibrate and grow
+        const shakeElapsed = elapsed - 500;
+        const shakeProgress = shakeElapsed / 4000; // 4 seconds of shaking
+
+        // Vibration: random jittering at increasing amplitude
+        const maxAmplitude = 1.5;
+        const amplitudeGrowth = Math.min(1, shakeProgress);
+        const amplitude = maxAmplitude * amplitudeGrowth;
+
+        // Size grows from 1.05 to 1.3
+        const scale = 1.05 + 0.25 * amplitudeGrowth;
+
+        // Generate random vibration offset
+        const xOffset = (Math.random() - 0.5) * 2 * amplitude;
+        const yOffset = (Math.random() - 0.5) * 2 * amplitude;
+
+        setIconTransform(
+          `translate(${xOffset}px, ${yOffset}px) scale(${scale})`,
+        );
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+      };
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    }, 1000);
+  };
+
+  const handleIconMouseUp = () => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+    setIsIconHeld(false);
+    setIconTransform("translate(0, 0) scale(1)");
+    animationStartRef.current = null;
+  };
+
+  const triggerStatsUpdate = () => {
+    toast.info("Requesting stats update...");
+  };
 
   useEffect(() => {
     if (!isSeasonsLoaded) {
@@ -525,7 +636,17 @@ export default function MarvelRivalsStatsWidget() {
     <WidgetCard>
       <HeaderContents>
         <Header>
-          <MarvelRivalsIcon size={20} /> Marvel Rivals
+          <AnimatedIconWrapper
+            ref={iconWrapperRef}
+            $transform={iconTransform}
+            className={isSnapping ? "snap" : ""}
+            onMouseDown={handleIconMouseDown}
+            onMouseUp={handleIconMouseUp}
+            onMouseLeave={handleIconMouseUp}
+          >
+            <MarvelRivalsIcon size={20} />
+          </AnimatedIconWrapper>{" "}
+          Marvel Rivals
         </Header>
         <Select.Root
           value={selectedSeason}
