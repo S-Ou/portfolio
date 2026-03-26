@@ -1,17 +1,10 @@
 import { getMarvelRivalsWidgetStats } from "@/lib/marvelRivals";
+import {
+  getMarvelRivalsApiKey,
+  getMarvelRivalsDefaultPlayerQuery,
+  marvelRivalsMissingApiKeyResponse,
+} from "@/lib/marvelRivalsRouteConfig";
 import { NextResponse } from "next/server";
-
-function getApiKey(): string | null {
-  return process.env.MARVEL_RIVALS_API_KEY?.trim() || null;
-}
-
-function getPlayerUid(): string {
-  return (
-    process.env.MARVEL_RIVALS_UID?.trim() ||
-    process.env.MARVEL_RIVALS_PLAYER?.trim() ||
-    "1077840408"
-  );
-}
 
 function parseSeasonParam(request: Request): number | undefined {
   const seasonRaw = new URL(request.url).searchParams.get("season");
@@ -32,16 +25,10 @@ function parseSeasonParam(request: Request): number | undefined {
 
 export async function GET(request: Request) {
   try {
-    const apiKey = getApiKey();
+    const apiKey = getMarvelRivalsApiKey();
 
     if (!apiKey) {
-      return NextResponse.json(
-        {
-          error:
-            "Missing Marvel Rivals configuration. Set MARVEL_RIVALS_API_KEY in your server environment.",
-        },
-        { status: 400 },
-      );
+      return marvelRivalsMissingApiKeyResponse();
     }
 
     const seasonResponseNumber = parseSeasonParam(request);
@@ -49,7 +36,7 @@ export async function GET(request: Request) {
     const { data, fromCache, backfillProgress } =
       await getMarvelRivalsWidgetStats({
         apiKey,
-        playerUid: getPlayerUid(),
+        playerUid: getMarvelRivalsDefaultPlayerQuery(),
         forceRefresh: false,
         seasonResponseNumber,
       });

@@ -6,7 +6,6 @@ import type {
   JsonObject,
   JsonValue,
   MarvelRivalsBackfillProgress,
-  MarvelRivalsHero,
   MarvelRivalsSeasonInfo,
   MarvelRivalsWidgetStats,
   SeasonSnapshot,
@@ -24,6 +23,11 @@ export type {
   MarvelRivalsWidgetStats,
   SeasonSnapshot,
 } from "@/lib/marvelRivals.types";
+
+export type MarvelRivalsPlayerUpdateResult = {
+  status: number;
+  payload: unknown;
+};
 
 const MARVEL_RIVALS_API_BASE = "https://marvelrivalsapi.com/api";
 const MARVEL_RIVALS_IMAGE_BASE = "https://marvelrivalsapi.com/rivals";
@@ -893,6 +897,42 @@ async function fetchPlayerStatsPayload({
     url: url.toString(),
     apiKey,
   });
+}
+
+export async function getMarvelRivalsPlayerUpdate({
+  apiKey,
+  playerQuery,
+}: {
+  apiKey: string;
+  playerQuery: string;
+}): Promise<MarvelRivalsPlayerUpdateResult> {
+  const encodedQuery = encodeURIComponent(playerQuery);
+  const url = `${MARVEL_RIVALS_API_BASE}/v1/player/${encodedQuery}/update`;
+
+  const response = await fetch(url, {
+    cache: "no-store",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "x-api-key": apiKey,
+    },
+  });
+
+  const rawText = await response.text();
+  let parsedPayload: unknown = null;
+
+  if (rawText.trim()) {
+    try {
+      parsedPayload = JSON.parse(rawText);
+    } catch {
+      parsedPayload = rawText;
+    }
+  }
+
+  return {
+    status: response.status,
+    payload: parsedPayload,
+  };
 }
 
 async function aggregateWidgetStats(
